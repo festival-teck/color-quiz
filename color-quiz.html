@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>これは何色？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201f1d;
+    --ink-soft: #514f49;
+    --paper: #faf9f6;
+    --panel: #ffffff;
+    --line: #e4e1d9;
+    --accent: #2b3a67;
+    --accent-ink: #ffffff;
+    --good: #2e7d32;
+    --bad: #b3261e;
+    --bad-bg: #fdecea;
+    --good-bg: #eaf5ea;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #f1efe9;
+      --ink-soft: #b9b6ad;
+      --paper: #17171a;
+      --panel: #201f23;
+      --line: #34333a;
+      --accent: #7c8fd6;
+      --accent-ink: #14141c;
+      --good: #7fd08a;
+      --bad: #ff8a80;
+      --bad-bg: #3a1f1e;
+      --good-bg: #1c3220;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
+    --accent-ink: #14141c;
+    --good: #7fd08a;
+    --bad: #ff8a80;
+    --bad-bg: #3a1f1e;
+    --good-bg: #1c3220;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    overflow-x: hidden;
+  }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  button, input {
+    font-family: inherit;
+  }
+
+  .view {
+    display: none;
+    min-height: 100svh;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .view.active { display: flex; }
+
+  /* ---------- Title view ---------- */
+
+  #view-title {
+    position: relative;
+    justify-content: center;
+    padding: 32px 20px 48px;
+    overflow: hidden;
+  }
+
+  .splash {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .splash svg { width: 100%; height: 100%; }
+  .blob {
+    filter: blur(28px);
+    opacity: 0.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    .blob { opacity: 0.35; }
+  }
+  :root[data-theme="dark"] .blob { opacity: 0.35; }
+
+  .title-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title-controls {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 16px);
+    right: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lang-toggle:active { transform: scale(0.96); }
+
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
+
+  h1.game-title {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+    font-weight: 900;
+    margin: 0 0 6px;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  .game-sub {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 0 0 28px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .level-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .site-footer {
+    width: 100%;
+    margin-top: 22px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+
+  .level-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px 18px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .level-card:active { transform: scale(0.98); }
+  .level-card:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .level-card:hover { border-color: var(--accent); }
+
+  .level-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .level-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .level-desc {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .swatch-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ---------- Quiz view ---------- */
+
+  #view-quiz {
+    justify-content: center;
+    padding: 20px 20px 40px;
+  }
+
+  .quiz-inner {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quiz-topbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .back-link {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    font-weight: 700;
+    padding: 6px 0;
+    cursor: pointer;
+  }
+
+  .progress-text {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  .color-square {
+    position: relative;
+    width: min(58vw, 220px);
+    height: min(58vw, 220px);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    margin-bottom: 22px;
+    transition: transform 0.12s ease;
+  }
+
+  .square-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(0,0,0,0.62);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    pointer-events: none;
+    max-width: 92%;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .square-label.show { display: flex; }
+  .square-label .sl-hex {
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+  }
+  .square-label .sl-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .color-square.shake {
+    animation: shake 0.35s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .choices {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .choice-btn {
+    padding: 14px 10px;
+    border-radius: 14px;
+    border: 1.5px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .choice-btn:active { transform: scale(0.97); }
+  .choice-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .choice-btn:disabled { cursor: default; }
+
+  .choice-btn.is-correct {
+    background: var(--good-bg);
+    border-color: var(--good);
+    color: var(--good);
+  }
+  .choice-btn.is-wrong {
+    background: var(--bad-bg);
+    border-color: var(--bad);
+    color: var(--bad);
+  }
+
+  .choice-btn.choice-hex {
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    letter-spacing: 0.03em;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .choice-text-mark {
+    font-weight: 900;
+  }
+
+  .choice-btn.choice-swatch {
+    position: relative;
+    padding: 0;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .choice-reveal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .choice-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.94);
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 900;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.28);
+  }
+
+  .choice-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+  .choice-info-hex {
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-weight: 800;
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+  }
+  .choice-info-name {
+    font-size: 0.6rem;
+    font-weight: 600;
+  }
+
+  .hint-btn {
+    background: none;
+    border: 1.5px dashed var(--line);
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 7px 14px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hint-btn:active { transform: scale(0.97); }
+
+  .hint-text {
+    width: 100%;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin: -4px 0 14px;
+    line-height: 1.6;
+    display: none;
+    white-space: pre-line;
+    font-weight: 500;
+  }
+  .hint-text.show { display: block; }
+
+  .hint-map {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .hint-map-chip {
+    flex: 1;
+    min-width: 0;
+    border-radius: 10px;
+    padding: 6px 4px;
+    text-align: center;
+    color: #fff;
+  }
+  .hint-map-chip .pos {
+    display: block;
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-size: 0.68rem;
+    font-weight: 800;
+    opacity: 0.9;
+    margin-bottom: 2px;
+  }
+  .hint-map-chip .val {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+  .hint-map-chip.chip-r { background: #c0392b; }
+  .hint-map-chip.chip-g { background: #2e7d32; }
+  .hint-map-chip.chip-b { background: #2955a3; }
+
+  .hint-legend {
+    font-size: 0.74rem;
+    line-height: 1.6;
+  }
+
+  .feedback {
+    min-height: 52px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 10px 14px;
+    visibility: hidden;
+  }
+  .feedback.show { visibility: visible; }
+  .feedback.good { color: var(--good); background: var(--good-bg); }
+  .feedback.bad { color: var(--bad); background: var(--bad-bg); }
+
+  /* ---------- Explanation panel (shown after a correct answer) ---------- */
+
+  .explain-panel {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: rise 0.25s ease;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .explain-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .explain-chip {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .explain-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .explain-hex {
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 3px 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .explain-text {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  .explain-options {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .explain-options.show { display: flex; }
+
+  .explain-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .explain-option.is-correct-opt {
+    border-color: var(--good);
+    background: var(--good-bg);
+  }
+  .explain-option-chip {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .explain-option-hex {
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .explain-option-name {
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .explain-next {
+    align-self: stretch;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .explain-next:active { transform: scale(0.98); }
+  .explain-next:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Result view ---------- */
+
+  #view-result {
+    justify-content: center;
+    padding: 32px 20px 48px;
+  }
+
+  .result-inner {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+
+  .result-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 18px;
+  }
+
+  .result-stats {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding: 6px 0;
+  }
+  .stat-row strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .stat-row + .stat-row {
+    border-top: 1px solid var(--line);
+  }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+  .btn-primary:active, .btn-secondary:active { transform: scale(0.98); }
+
+  .btn-share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .x-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: #000;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    .x-icon { background: #fff; color: #000; }
+  }
+  :root[data-theme="dark"] .x-icon { background: #fff; color: #000; }
+
+  /* ---------- Larger screens (tablet / desktop) ---------- */
+
+  @media (min-width: 640px) {
+    .title-inner, .quiz-inner, .result-inner { max-width: 480px; }
+
+    h1.game-title { font-size: clamp(2rem, 5vw, 3rem); }
+    .game-sub { font-size: 1.05rem; margin-bottom: 34px; }
+
+    .back-link, .progress-text { font-size: 1.15rem; }
+
+    .level-card { padding: 20px 24px; gap: 12px; }
+    .level-name { font-size: 1.3rem; }
+    .level-desc { font-size: 0.9rem; }
+    .swatch { width: 32px; height: 32px; }
+
+    .color-square { width: min(34vw, 280px); height: min(34vw, 280px); margin-bottom: 28px; }
+    .question-text { font-size: 1.25rem; margin-bottom: 22px; }
+
+    .choice-btn { padding: 17px 12px; font-size: 1.05rem; border-radius: 16px; }
+    .choice-btn.choice-hex { font-size: 1rem; }
+    .choices { gap: 12px; margin-bottom: 20px; }
+
+    .feedback { font-size: 1.05rem; min-height: 56px; }
+
+    .explain-panel { padding: 22px 24px; gap: 12px; }
+    .explain-chip { width: 26px; height: 26px; }
+    .explain-hex { font-size: 0.85rem; padding: 4px 10px; }
+    .explain-name { font-size: 1.2rem; }
+    .explain-text { font-size: 0.95rem; }
+    .explain-next { font-size: 0.95rem; padding: 14px; }
+
+    .result-title { font-size: 1.9rem; }
+    .result-stats { padding: 24px; }
+    .stat-row { font-size: 1.05rem; }
+    .btn-primary, .btn-secondary { font-size: 1rem; padding: 16px 22px; }
+  }
+
+  @media (min-width: 1024px) {
+    .title-inner, .quiz-inner, .result-inner { max-width: 540px; }
+    h1.game-title { font-size: clamp(2rem, 4vw, 3.4rem); }
+    .color-square { width: min(26vw, 320px); height: min(26vw, 320px); }
+  }
+</style>
+</head>
+<body>
+
+<div id="view-title" class="view active">
+  <div class="splash" aria-hidden="true">
+    <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice">
+      <circle class="blob" cx="60" cy="90" r="110" fill="#e53935"/>
+      <circle class="blob" cx="340" cy="160" r="90" fill="#1e88e5"/>
+      <circle class="blob" cx="90" cy="620" r="130" fill="#fdd835"/>
+      <circle class="blob" cx="330" cy="680" r="100" fill="#8e24aa"/>
+      <circle class="blob" cx="200" cy="400" r="140" fill="#43a047"/>
+      <circle class="blob" cx="20" cy="380" r="70" fill="#fb8c00"/>
+    </svg>
+  </div>
+  <div class="title-controls">
+    <button class="icon-toggle" id="mute-toggle" type="button" aria-label="Mute sound effects">🔊</button>
+    <button class="lang-toggle" id="lang-toggle" type="button">EN</button>
+  </div>
+  <div class="title-inner">
+    <h1 class="game-title" id="game-title">これは何色？</h1>
+    <p class="game-sub" id="game-sub">正方形の色を当てるだけのシンプルなゲーム</p>
+    <div class="level-list" id="level-list"></div>
+    <div class="site-footer">
+      <a id="footer-privacy" href="privacy.html">プライバシーポリシー</a>
+      <span class="footer-sep" aria-hidden="true">・</span>
+      <a id="footer-about" href="about.html">運営者情報</a>
+    </div>
+  </div>
+</div>
+
+<div id="view-quiz" class="view">
+  <div class="quiz-inner">
+    <div class="quiz-topbar">
+      <button class="back-link" id="quit-btn" type="button">← レベル選択</button>
+      <span class="progress-text" id="progress-text"></span>
+    </div>
+    <div class="color-square" id="color-square">
+      <span class="square-label" id="square-label">
+        <span class="sl-hex" id="sl-hex"></span>
+        <span class="sl-name" id="sl-name"></span>
+      </span>
+    </div>
+    <p class="question-text" id="question-text">これは何色？</p>
+    <button class="hint-btn" id="hint-btn" type="button">ヒントを見る</button>
+    <div class="hint-text" id="hint-text"></div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="explain-panel" id="explain-panel" style="display: none;">
+      <div class="explain-head">
+        <span class="explain-chip" id="explain-chip"></span>
+        <span class="explain-name" id="explain-name"></span>
+        <span class="explain-hex" id="explain-hex"></span>
+      </div>
+      <p class="explain-text" id="explain-text"></p>
+      <div class="explain-options" id="explain-options"></div>
+      <button class="explain-next" id="explain-next" type="button">つぎの問題へ</button>
+    </div>
+  </div>
+</div>
+
+<div id="view-result" class="view">
+  <div class="result-inner">
+    <p class="result-title" id="result-title">全問クリア！</p>
+    <div class="result-stats">
+      <div class="stat-row"><span id="stat-first-label">一発正解</span><strong id="stat-first"></strong></div>
+      <div class="stat-row"><span id="stat-best-label">自己ベスト</span><strong id="stat-best"></strong></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-primary" id="retry-btn" type="button">もう一度あそぶ</button>
+      <button class="btn-secondary btn-share" id="share-btn" type="button">
+        <span class="x-icon" aria-hidden="true">𝕏</span>
+        <span id="share-btn-label">結果をシェア</span>
+      </button>
+      <button class="btn-secondary" id="back-btn" type="button">レベルを選びなおす</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var LEVELS = {
+    beginner: {
+      label: "初級",
+      desc: "定番の色を当てよう",
+      mode: "name",
+      count: 10,
+      colors: [
+        { hex: "#E53935", name: "赤(あか)", name_en: "Red", answers: ["赤", "あか", "アカ", "red", "レッド"], info: "消防車や信号機の「止まれ」など、注意を引きたい場所でよく使われる色。自然界ではリンゴやトマト、夕日に見られる。", info_en: "Used where attention matters most, like fire trucks and stop signs. Seen in apples, tomatoes, and sunsets." },
+        { hex: "#1E88E5", name: "青(あお)", name_en: "Blue", answers: ["青", "あお", "アオ", "blue", "ブルー"], info: "空や海の色として最も身近な色のひとつ。企業ロゴや制服にも「信頼感」を表す色として使われることが多い。", info_en: "One of the most familiar colors, seen in the sky and sea. Often used in logos and uniforms to suggest trust." },
+        { hex: "#FDD835", name: "黄色(きいろ)", name_en: "Yellow", answers: ["黄色", "きいろ", "キイロ", "黄", "yellow", "イエロー"], info: "信号機の「注意」や通学帽・旗など、目立たせたい場所によく使われる。ひまわりやレモン、バナナの色でもある。", info_en: "Used for caution signals and school hats to stand out. Seen in sunflowers, lemons, and bananas." },
+        { hex: "#43A047", name: "緑(みどり)", name_en: "Green", answers: ["緑", "みどり", "ミドリ", "green", "グリーン"], info: "「安全」「自然」を表す色として非常口の表示や公園の看板に使われる。木々の葉や草原の色。", info_en: "Represents safety and nature — used on exit signs and park markers. The color of leaves and grasslands." },
+        { hex: "#8E24AA", name: "紫(むらさき)", name_en: "Purple", answers: ["紫", "むらさき", "ムラサキ", "purple", "パープル"], info: "古来、日本でも中国でも高貴な身分の人しか身につけられなかった「高貴の色」。ラベンダーやぶどうに見られる。", info_en: "Historically reserved for nobility in both Japan and China. Seen in lavender and grapes." },
+        { hex: "#FB8C00", name: "オレンジ", name_en: "Orange", answers: ["オレンジ", "橙", "だいだい", "orange"], info: "工事現場の看板やライフジャケットなど、注意喚起の色として使われる。みかんや夕焼け空の色。", info_en: "Used for high-visibility signage like construction signs and life jackets. Seen in mandarins and sunsets." },
+        { hex: "#F48FB1", name: "ピンク", name_en: "Pink", answers: ["ピンク", "桃色", "ももいろ", "pink"], info: "桜や桃の花に代表される、日本では春を象徴する色。海外では「かわいらしさ」の象徴としてもよく使われる。", info_en: "A symbol of spring in Japan through cherry and peach blossoms; often read as a symbol of cuteness abroad." },
+        { hex: "#6D4C41", name: "茶色(ちゃいろ)", name_en: "Brown", answers: ["茶色", "ちゃいろ", "茶", "brown", "ブラウン"], info: "木の幹や土、チョコレートの色。落ち着きや安心感を与える色として、インテリアによく使われる。", info_en: "The color of tree trunks, soil, and chocolate. Common in interiors for its calm, grounded feel." },
+        { hex: "#212121", name: "黒(くろ)", name_en: "Black", answers: ["黒", "くろ", "クロ", "black", "ブラック"], info: "フォーマルな場面での礼服の定番色。夜空や炭、黒曜石などに見られる。", info_en: "The standard color for formalwear. Seen in the night sky, charcoal, and obsidian." },
+        { hex: "#F5F5F0", name: "白(しろ)", name_en: "White", answers: ["白", "しろ", "シロ", "white", "ホワイト"], info: "結婚式のウェディングドレスなど「純粋さ」の象徴とされる色。雪や雲、真珠の色でもある。", info_en: "A symbol of purity, as in wedding dresses. Seen in snow, clouds, and pearls." },
+        { hex: "#9E9E9E", name: "灰色(はいいろ)", name_en: "Gray", answers: ["灰色", "はいいろ", "グレー", "gray", "grey", "ねずみ色"], info: "ビジネススーツなどに使われる、主張しすぎない色。曇り空や岩、コンクリートの色。", info_en: "An understated color common in business suits. Seen in overcast skies and concrete." },
+        { hex: "#4FC3F7", name: "空色(そらいろ)", name_en: "Sky Blue", answers: ["空色", "そらいろ", "skyblue"], info: "雲ひとつない晴れた日の空の色。「青」よりも明るく澄んだ印象を与える色として、爽やかさを表現したい場面でよく使われる。", info_en: "The color of a clear, cloudless sky — brighter and crisper than plain blue, used for a refreshing feel." },
+        { hex: "#A4DE02", name: "ライムグリーン", name_en: "Lime Green", answers: ["ライムグリーン", "ライム", "limegreen"], info: "ライム(青柑橘)の皮のような、黄色みの強い鮮やかな緑。スポーツウェアや飲料のパッケージなど、元気な印象を与えたい場面で使われる。", info_en: "A vivid yellow-green like lime peel, often used in sportswear and drink packaging for an energetic feel." },
+        { hex: "#D6249F", name: "マゼンタ", name_en: "Magenta", answers: ["マゼンタ", "magenta"], info: "赤紫の鮮やかな色。印刷インクの三原色(シアン・マゼンタ・イエロー)のひとつとしても知られる。", info_en: "A vivid reddish-purple. One of the three primary printing ink colors, alongside cyan and yellow." },
+        { hex: "#FF7F6B", name: "コーラル", name_en: "Coral", answers: ["コーラル", "珊瑚色", "さんごいろ", "coral"], info: "サンゴ(珊瑚)のような、オレンジがかったピンク。南国リゾートを連想させる色として水着やインテリアに人気。", info_en: "An orange-tinted pink named after coral reefs, popular for a tropical-resort feel in swimwear and interiors." },
+        { hex: "#1B5E20", name: "深緑(ふかみどり)", name_en: "Dark Green", answers: ["深緑", "ふかみどり", "こいみどり"], info: "深い森のような、黒に近い濃い緑。落ち着いた印象を与える色として、高級感を演出したい場面で使われる。", info_en: "A near-black deep green like a dense forest, often used to suggest calm and understated luxury." },
+        { hex: "#6FE7B7", name: "ミントグリーン", name_en: "Mint Green", answers: ["ミントグリーン", "mintgreen", "ミント"], info: "ミントの葉のような、涼しげな緑がかった水色。清涼感を演出したいお菓子やコスメのパッケージによく使われる。", info_en: "A cool, greenish-blue like mint leaves, popular in candy and cosmetics packaging for its fresh feel." },
+        { hex: "#F7EA48", name: "レモンイエロー", name_en: "Lemon Yellow", answers: ["レモンイエロー", "lemonyellow"], info: "レモンの皮のような、酸味を感じさせる鮮やかな黄色。爽やかさや元気なイメージを表現したい場面で使われる。", info_en: "A tangy, vivid yellow like lemon peel, used to suggest freshness and energy." },
+        { hex: "#2EC4E0", name: "アクアブルー", name_en: "Aqua Blue", answers: ["アクアブルー", "aquablue", "アクア"], info: "南国の澄んだ海のような、明るく鮮やかな青緑。プールやリゾート地のイメージを演出する場面でよく使われる。", info_en: "A bright blue-green like clear tropical seas, often used to evoke pools and resort destinations." },
+        { hex: "#6B6B1F", name: "オリーブ色", name_en: "Olive", answers: ["オリーブ色", "オリーブ", "olive"], info: "オリーブの実のような、くすんだ黄緑。派手すぎない落ち着いた印象から、アウトドア用品やミリタリー系のアイテムに人気。", info_en: "A muted yellow-green like olives, popular in outdoor gear and military-style items for its understated look." },
+        { hex: "#E30B5C", name: "ラズベリー", name_en: "Raspberry", answers: ["ラズベリー", "raspberry"], info: "木苺(きいちご)のような、鮮やかな赤紫。スイーツやコスメのパッケージで、甘酸っぱさを感じさせる色として使われる。", info_en: "A vivid reddish-pink like raspberries, often used in sweets and cosmetics to suggest a tart-sweet flavor." },
+        { hex: "#4A2C1B", name: "チョコレート色", name_en: "Chocolate", answers: ["チョコレート色", "チョコレート", "chocolate"], info: "ビターチョコレートのような、黒に近い濃い茶色。「茶色」よりも重厚感のある、大人っぽい印象を与える。", info_en: "A deep, near-black brown like bitter chocolate, giving a richer, more mature impression than plain brown." },
+        { hex: "#FFCBA4", name: "ペールオレンジ", name_en: "Pale Orange", answers: ["ペールオレンジ", "paleorange"], info: "淡く優しいオレンジ色。クレヨンや絵の具の色名としてよく使われ、柔らかく温かい印象を与える。", info_en: "A soft, gentle orange often used as a crayon or paint color name, giving a warm, mild impression." }
+      ]
+    },
+    intermediate: {
+      label: "中級",
+      desc: "ちょっと渋い色にも挑戦",
+      mode: "name",
+      count: 7,
+      colors: [
+        { hex: "#81D4FA", name: "水色(みずいろ)", name_en: "Light Blue", answers: ["水色", "みずいろ", "skyblue", "ライトブルー"], info: "晴れた日の空や、澄んだプールの水の色。爽やかさを演出したい看板やロゴによく使われる。", info_en: "The color of clear skies and swimming pools; used in signage and logos for a refreshing feel." },
+        { hex: "#1A237E", name: "紺色(こんいろ)", name_en: "Navy", answers: ["紺色", "紺", "こんいろ", "navy", "ネイビー"], info: "学生服やスーツの定番色として、日本では「きちんと感」を表す色。夜の深い海の色でもある。", info_en: "A staple of school uniforms and suits in Japan, evoking neatness. Also the color of the deep night sea." },
+        { hex: "#C0CA33", name: "黄緑(きみどり)", name_en: "Yellow-Green", answers: ["黄緑", "きみどり", "黄緑色", "yellowgreen"], info: "新芽の色として「若さ」「成長」を象徴する色。非常口マークの下地色にも使われている。", info_en: "The color of new sprouts, symbolizing youth and growth. Also the background color of exit signs." },
+        { hex: "#E8DCC8", name: "ベージュ", name_en: "Beige", answers: ["ベージュ", "beige"], info: "砂や生成りの布の色。主張しすぎず、どんな色とも合わせやすいので内装や服によく使われる。", info_en: "The color of sand or unbleached cloth — versatile and unobtrusive, common in interiors and clothing." },
+        { hex: "#D4AF00", name: "金色(きんいろ)", name_en: "Gold", answers: ["金色", "きんいろ", "gold", "ゴールド"], info: "神社の装飾品や勲章など、格式の高さを表す色。実りの秋、黄金色に輝く稲穂にも見られる。", info_en: "A color of prestige seen on shrine ornaments and medals. Also the color of ripe autumn rice." },
+        { hex: "#B0B0B0", name: "銀色(ぎんいろ)", name_en: "Silver", answers: ["銀色", "ぎんいろ", "silver", "シルバー"], info: "硬貨やアクセサリーに使われる、上品で洗練された印象を与える色。満月の光や霜にも例えられる。", info_en: "An elegant, refined color used for coins and jewelry, often likened to moonlight or frost." },
+        { hex: "#7B2D26", name: "えんじ色", name_en: "Deep Crimson", answers: ["えんじ色", "えんじ", "臙脂", "臙脂色"], info: "紅花から作られる濃い赤紫。着物や和装小物に古くから使われてきた、大人っぽい赤。", info_en: "A deep reddish-purple from safflower dye, long used in kimono and accessories for a mature look." },
+        { hex: "#22577E", name: "藍色(あいいろ)", name_en: "Indigo", answers: ["藍色", "あいいろ", "藍", "indigo"], info: "藍染めの技法で古くから使われてきた、日本を代表する伝統色。ジーンズの色としても世界的に親しまれている。", info_en: "A traditional Japanese dye color used for centuries; also familiar worldwide as the color of denim." },
+        { hex: "#C9A227", name: "からし色", name_en: "Mustard", answers: ["からし色", "からし", "mustard"], info: "からしの実をすり潰した色。渋くて大人びた黄色として、秋冬の服やインテリアに人気がある。", info_en: "The color of ground mustard seed — a muted, grown-up yellow popular in autumn and winter items." },
+        { hex: "#FFF3D0", name: "クリーム色", name_en: "Cream", answers: ["クリーム色", "クリーム", "cream"], info: "生クリームやバターの色。白よりも柔らかく、温かみのある印象を与える。", info_en: "The color of fresh cream and butter; softer and warmer than plain white." },
+        { hex: "#2FA8A0", name: "ターコイズ", name_en: "Turquoise", answers: ["ターコイズ", "turquoise"], info: "トルコ石(ターコイズ)に由来する青緑色。アクセサリーや水着など、南国の海をイメージさせる場面でよく使われる。", info_en: "A blue-green named after turquoise stone, evoking tropical seas in accessories and swimwear." },
+        { hex: "#C1652F", name: "テラコッタ", name_en: "Terracotta", answers: ["テラコッタ", "terracotta"], info: "素焼きの陶器「テラコッタ」の色。植木鉢やタイルの色として親しまれ、近年はインテリアの人気色でもある。", info_en: "The color of unglazed clay pottery, familiar from flowerpots and tiles, and a recent interior-design trend." },
+        { hex: "#B39DDB", name: "ラベンダー", name_en: "Lavender", answers: ["ラベンダー", "lavender"], info: "ラベンダーの花のような、青みがかった優しい紫。リラックス効果のイメージから香りの製品パッケージにもよく使われる。", info_en: "A gentle, blue-tinted purple like lavender flowers, often used for its calming association." },
+        { hex: "#6B8E4E", name: "モスグリーン", name_en: "Moss Green", answers: ["モスグリーン", "苔色", "こけいろ", "mossgreen"], info: "苔(こけ)のような、少しくすんだ緑。派手すぎないので、秋冬のファッションやミリタリー系のアイテムに人気。", info_en: "A muted green like moss, popular in autumn and winter fashion and military-inspired items." },
+        { hex: "#FF8C7A", name: "サーモンピンク", name_en: "Salmon Pink", answers: ["サーモンピンク", "salmonpink"], info: "鮭(サーモン)の身のような、オレンジがかったピンク。肌なじみが良く、シャツやリップの色としても定番。", info_en: "An orange-tinted pink like salmon flesh, flattering on skin and common in shirts and lipstick." },
+        { hex: "#8A7B4E", name: "カーキ", name_en: "Khaki", answers: ["カーキ", "khaki"], info: "もとは軍服に使われた土埃のような色。「カーキ色」と聞いて緑を思い浮かべる人も多いが、本来は黄土色に近い。", info_en: "Originally a dusty military color. Often pictured as green, but true khaki is closer to yellowish-brown." },
+        { hex: "#6D2130", name: "ワインレッド", name_en: "Wine Red", answers: ["ワインレッド", "ボルドー", "winered", "bordeaux"], info: "赤ワインのような深みのある赤。フォーマルな装いやレザーグッズの色として、大人っぽい印象を与える。", info_en: "A deep red like red wine, giving a mature impression in formalwear and leather goods." },
+        { hex: "#7B4397", name: "スミレ色(すみれいろ)", name_en: "Violet", answers: ["スミレ色", "すみれいろ", "菫色", "violet"], info: "スミレの花のような、青みの強い紫。日本では古くから和歌にも詠まれてきた、可憐さを感じさせる色。", info_en: "A blue-tinted purple like violet flowers, long celebrated in Japanese poetry for its delicate charm." },
+        { hex: "#F2EAD3", name: "アイボリー", name_en: "Ivory", answers: ["アイボリー", "象牙色", "ぞうげいろ", "ivory"], info: "象牙(ぞうげ)のような、黄みを帯びた柔らかい白。ウェディングアイテムや文房具など、上品さを求める場面でよく選ばれる。", info_en: "A soft, yellow-tinted white like ivory, favored in wedding items and stationery for its elegance." },
+        { hex: "#93C572", name: "ピスタチオグリーン", name_en: "Pistachio Green", answers: ["ピスタチオグリーン", "pistachio"], info: "ピスタチオの実のような、くすみのある黄緑。スイーツやパッケージデザインで、ナチュラルで柔らかい印象を演出する。", info_en: "A muted yellow-green like pistachio nuts, giving a natural, soft feel in sweets and packaging." },
+        { hex: "#8CA05C", name: "抹茶色(まっちゃいろ)", name_en: "Matcha Green", answers: ["抹茶色", "まっちゃいろ", "抹茶", "matcha"], info: "挽きたての抹茶のような、くすみのある黄緑。和スイーツのパッケージやカフェのロゴなど、和の雰囲気を出したい場面で人気。", info_en: "A muted yellow-green like freshly ground matcha, popular in Japanese-style sweets packaging and café branding." },
+        { hex: "#7C2528", name: "小豆色(あずきいろ)", name_en: "Azuki Red", answers: ["小豆色", "あずきいろ", "小豆"], info: "小豆(あずき)の皮のような、黒みがかった深い赤茶色。和菓子や着物の色として古くから親しまれてきた。", info_en: "A dark, blackish red-brown like azuki bean skins, long favored for Japanese sweets and kimono." },
+        { hex: "#F4A300", name: "サフラン色(さふらんいろ)", name_en: "Saffron", answers: ["サフラン色", "さふらんいろ", "サフラン", "saffron"], info: "香辛料サフランのめしべのような、濃い黄橙色。世界最高級のスパイスの一つとして、染料や食用色素にも使われてきた。", info_en: "A deep orange-yellow like saffron threads, one of the world's costliest spices, also used as a dye and food coloring." },
+        { hex: "#36454F", name: "チャコールグレー", name_en: "Charcoal Gray", answers: ["チャコールグレー", "charcoalgray", "チャコール"], info: "炭(チャコール)のような、黒に近い濃い灰色。ビジネスウェアやインテリアで、黒よりも柔らかい印象を与えたいときに使われる。", info_en: "A near-black gray like charcoal, used in business wear and interiors for a softer look than plain black." },
+        { hex: "#C48793", name: "スモーキーピンク", name_en: "Smoky Pink", answers: ["スモーキーピンク", "smokypink"], info: "灰色がかった、くすみのあるピンク。甘すぎない大人っぽい印象から、ネイルやインテリアの人気色になっている。", info_en: "A grayish, muted pink, popular in nail art and interiors for a mature look that isn't overly sweet." },
+        { hex: "#B0E0E6", name: "パウダーブルー", name_en: "Powder Blue", answers: ["パウダーブルー", "powderblue"], info: "粉(パウダー)をまぶしたような、白みがかった淡い青。優しく穏やかな印象を与える色として、ベビー用品にもよく使われる。", info_en: "A soft, whitened pale blue, giving a gentle, calm impression and often used for baby items." },
+        { hex: "#228B22", name: "フォレストグリーン", name_en: "Forest Green", answers: ["フォレストグリーン", "forestgreen"], info: "生い茂る森の木々のような、深みのある緑。アウトドアブランドのロゴなど、自然を感じさせたい場面で使われる。", info_en: "A rich green like a dense forest canopy, often used in outdoor brand logos to evoke nature." },
+        { hex: "#8E4585", name: "プラム色(ぷらむいろ)", name_en: "Plum", answers: ["プラム色", "ぷらむいろ", "プラム", "plum"], info: "プラム(西洋すもも)の皮のような、赤みがかった深い紫。秋冬のファッションやコスメで、大人っぽい色として人気。", info_en: "A reddish, deep purple like plum skins, popular in autumn/winter fashion and cosmetics for its mature feel." }
+      ]
+    },
+    advanced: {
+      label: "上級",
+      desc: "和色の微妙な違いを見極めろ",
+      mode: "name",
+      count: 5,
+      colors: [
+        { hex: "#D0104C", name: "紅(くれない)", answers: ["紅", "くれない", "紅色"], info: "紅花から採れる染料の色で、古くは金と同じ重さで取引されたほど貴重だった。「口紅」の語源にもなっている。" },
+        { hex: "#EB6238", name: "朱色(しゅいろ)", answers: ["朱", "朱色", "しゅいろ"], info: "神社の鳥居や社殿に使われる色で、魔除けの意味を持つとされる。硫化水銀を原料とする顔料「朱」に由来。" },
+        { hex: "#D9333F", name: "緋色(ひいろ)", answers: ["緋", "緋色", "ひいろ"], info: "武将の鎧や陣羽織に好んで使われた、燃えるような赤。「緋鯉(ひごい)」の名前にも使われている。" },
+        { hex: "#B7282E", name: "茜色(あかねいろ)", answers: ["茜", "茜色", "あかねいろ"], info: "アカネという植物の根から採れる染料の色。「茜色の空」という表現の通り、今も夕焼けを形容する言葉として使われる。" },
+        { hex: "#E2540A", name: "丹色(にいろ)", answers: ["丹", "丹色", "にいろ"], info: "酸化鉛を原料とする顔料「丹」に由来する、朱色よりやや黄みがかった赤。古墳の石室や神社建築にも使われてきた。" },
+        { hex: "#00A3AF", name: "浅葱色(あさぎいろ)", answers: ["浅葱", "浅葱色", "あさぎいろ"], info: "新選組の羽織の色として知られる、緑がかった薄い藍色。「葱(ねぎ)の葉」のような色、という意味の名前を持つ。" },
+        { hex: "#1E50A2", name: "瑠璃色(るりいろ)", answers: ["瑠璃", "瑠璃色", "るりいろ"], info: "仏教の七宝の一つ「瑠璃」＝ラピスラズリの色。仏像の装飾や高級な陶磁器の釉薬に使われてきた。" },
+        { hex: "#4C6CB3", name: "群青色(ぐんじょういろ)", answers: ["群青", "群青色", "ぐんじょういろ"], info: "「青が群れる」と書く通りの濃い青。葛飾北斎の『神奈川沖浪裏』の波の色として世界的に有名。" },
+        { hex: "#AACF53", name: "萌黄色(もえぎいろ)", answers: ["萌黄", "萌黄色", "もえぎいろ"], info: "春に萌え出る若葉の色。鎌倉・室町時代の鎧の縅糸(おどしいと)の色としても好まれた、生命力を感じさせる黄緑。" },
+        { hex: "#F8B500", name: "山吹色(やまぶきいろ)", answers: ["山吹", "山吹色", "やまぶきいろ"], info: "ヤマブキの花に由来する、赤みがかった鮮やかな黄色。江戸時代には小判の色として「賄賂」の隠語にも使われた。" },
+        { hex: "#A13D2C", name: "弁柄色(べんがらいろ)", answers: ["弁柄", "弁柄色", "べんがらいろ", "紅殻色"], info: "酸化鉄を主成分とする顔料「弁柄」に由来する赤茶色。京都の町家の格子戸や神社仏閣の外壁など、日本建築で古くから使われてきた。" },
+        { hex: "#A8CB3B", name: "若草色(わかくさいろ)", answers: ["若草", "若草色", "わかくさいろ"], info: "春に萌え出たばかりの若い草の色。同じ黄緑でも「萌黄色」よりやや落ち着いた、瑞々しい印象の緑。" },
+        { hex: "#FEEEED", name: "桜色(さくらいろ)", answers: ["桜", "桜色", "さくらいろ"], info: "満開の桜の花びらのようなごく淡いピンク。「ピンク」より白に近く、儚さや上品さを表す色として着物や和菓子に使われる。" },
+        { hex: "#1B7340", name: "常磐色(ときわいろ)", answers: ["常磐", "常磐色", "ときわいろ"], info: "常緑樹の葉のように一年を通じて変わらない深い緑。「常磐」は「永遠不変」を意味し、長寿や繁栄を祝う色とされてきた。" },
+        { hex: "#F1B2A4", name: "鴇色(ときいろ)", answers: ["鴇", "鴇色", "ときいろ", "朱鷺色"], info: "特別天然記念物トキの風切羽のような、淡く優しいピンク。かつて全国に生息したトキの姿が、色の名前として今も残っている。" },
+        { hex: "#A8D8D8", name: "秘色(ひそく)", answers: ["秘色", "ひそく"], info: "中国越州窯の青磁の色に由来する、神秘的な青緑。かつて皇帝だけが使うことを許された色だったことから「秘める色」と呼ばれた。" },
+        { hex: "#6A3D9A", name: "江戸紫(えどむらさき)", answers: ["江戸紫", "えどむらさき"], info: "江戸時代に流行した、青みの強い紫。京都で好まれた赤みの強い「古代紫」に対抗して生まれた、江戸っ子好みの粋な色とされる。" },
+        { hex: "#D7CF3A", name: "鶸色(ひわいろ)", answers: ["鶸", "鶸色", "ひわいろ"], info: "鶸(ひわ)という小鳥の羽のような、明るい黄緑。江戸時代に着物の色として広く親しまれた。" },
+        { hex: "#1A2744", name: "鉄紺(てつこん)", answers: ["鉄紺", "てつこん"], info: "鉄のような重厚感を帯びた、黒に近い紺色。武士の羽織や現代のスーツにも通じる、引き締まった印象の色。" },
+        { hex: "#D6D69E", name: "承和色(そがいろ)", answers: ["承和色", "そがいろ"], info: "平安時代、仁明天皇の「承和」年間に流行したとされる、菊の花に由来する淡い黄緑。" },
+        { hex: "#5654A2", name: "桔梗色(ききょういろ)", answers: ["桔梗色", "ききょういろ"], info: "秋の七草のひとつ、桔梗の花のような青紫。武将・明智光秀の家紋にも使われたことで知られる色。" },
+        { hex: "#B19CD9", name: "藤色(ふじいろ)", answers: ["藤色", "ふじいろ"], info: "藤の花房のような、上品で優しい薄紫。平安時代から高貴な色として愛され、「源氏物語」にも登場する。" },
+        { hex: "#6B6C23", name: "鶯色(うぐいすいろ)", answers: ["鶯色", "うぐいすいろ"], info: "ウグイスの羽のような、くすんだ黄緑がかった茶色。「梅にウグイス」の名で知られるが、実際のウグイスの体色は地味な色をしている。" },
+        { hex: "#7C1C22", name: "深緋(こきひ)", answers: ["深緋", "こきひ"], info: "奈良時代の位階制度で、高い位の官人だけが身につけることを許された濃い緋色。「深き緋色」の意で、身分の高さを表した。" },
+        { hex: "#9C9B94", name: "銀鼠(ぎんねず)", answers: ["銀鼠", "ぎんねず"], info: "銀色を帯びた、上品な鼠色。江戸時代には奢侈禁止令のもとで「鼠色」の微妙な違いを楽しむ「四十八茶百鼠」という文化が生まれた。" },
+        { hex: "#7F8471", name: "利休鼠(りきゅうねずみ)", answers: ["利休鼠", "りきゅうねずみ"], info: "茶人・千利休の名を冠した、緑がかった鼠色。派手さを避け、静けさを重んじる茶の湯の美意識を象徴する色とされる。" },
+        { hex: "#1F4B3F", name: "千歳緑(ちとせみどり)", answers: ["千歳緑", "ちとせみどり"], info: "常緑樹の緑のように、千年たっても変わらないとされる深い緑。長寿や繁栄を祝う、おめでたい色として好まれてきた。" }
+      ]
+    },
+    extreme: {
+      label: "激ムズ",
+      desc: "似ている4つのコードから正解を選べ",
+      mode: "hexChoice",
+      count: 5
+    },
+    discern: {
+      label: "この色も256色あんの？",
+      desc: "同じ色に見えて、実は少しずつ違う——見分けられる？",
+      mode: "swatch",
+      count: 5
+    }
+  };
+
+  var LEVEL_ORDER = ["beginner", "intermediate", "advanced", "extreme", "discern"];
+
+  var STRINGS = {
+    ja: {
+      title: "これは何色？",
+      subtitle: "正方形の色を当てるだけのシンプルなゲーム",
+      footerPrivacy: "プライバシーポリシー",
+      footerAbout: "運営者情報",
+      langToggle: "EN",
+      back: "← レベル選択",
+      questionName: "これは何色？",
+      questionHex: "このカラーコードは？",
+      questionSwatch: "同じ色はどれ？",
+      correctWithName: function (name) { return "○ 正解！「" + name + "」"; },
+      correctGeneric: "○ 正解！",
+      wrong: "× ちがうよ。もう一度！",
+      nextQuestion: "つぎの問題へ",
+      seeResults: "結果を見る",
+      hexCorrectLabel: "正解のコード",
+      swatchCorrectLabel: "正解の色",
+      correctTag: "(正解)",
+      nearTo: function (name) { return name + "に近い色"; },
+      resultTitleTemplate: function (label, phrase) { return label + "、" + phrase; },
+      resultPerfect: "全問正解！パーフェクト！",
+      resultGreat: "素晴らしい成績！",
+      resultGood: "なかなかの結果！",
+      resultTryAgain: "もう一度挑戦してみよう！",
+      statFirstLabel: "一発正解",
+      statBestLabel: "自己ベスト",
+      retry: "もう一度あそぶ",
+      chooseAnother: "レベルを選びなおす",
+      share: "結果をシェア",
+      shareText: function (label, correct, total) {
+        return "「これは何色？」" + label + "で自己ベスト " + correct + "/" + total + " を達成！";
+      },
+      hintShow: "ヒントを見る",
+      hintHide: "ヒントを隠す",
+      hintPosR: "1〜2桁目(R)",
+      hintPosG: "3〜4桁目(G)",
+      hintPosB: "5〜6桁目(B)",
+      hintLegend: "目安：00-32=かなり暗い／33-65=暗め／66-98=中間／99-CB=明るめ／CC-FF=かなり明るい",
+      bucketVeryDark: "かなり暗い",
+      bucketDark: "暗め",
+      bucketMid: "中間",
+      bucketLight: "明るめ",
+      bucketVeryLight: "かなり明るい",
+      thisIsTarget: "正解",
+      magFaint: "わずかに",
+      magSlight: "やや",
+      brighterWord: "明るめ",
+      darkerWord: "暗め",
+      brightTemplate: function (mag, word) { return mag + word; },
+      hueTemplate: function (mag, word) { return mag + word + "寄り"; },
+      redWord: "赤み",
+      cyanWord: "シアン",
+      greenWord: "緑み",
+      magentaWord: "マゼンタ",
+      blueWord: "青み",
+      yellowWord: "黄み",
+      optionAria: "候補の色",
+      levels: {
+        beginner: { label: "初級", desc: "定番の色を当てよう" },
+        intermediate: { label: "中級", desc: "ちょっと渋い色にも挑戦" },
+        advanced: { label: "上級", desc: "和色の微妙な違いを見極めろ" },
+        extreme: { label: "激ムズ", desc: "似ている4つのコードから正解を選べ" },
+        discern: { label: "この色も256色あんの？", desc: "同じ色に見えて、実は少しずつ違う——見分けられる？" }
+      }
+    },
+    en: {
+      title: "What Color Is This?",
+      subtitle: "A simple game — just guess the color of the square",
+      footerPrivacy: "Privacy Policy",
+      footerAbout: "About",
+      langToggle: "日本語",
+      back: "← Levels",
+      questionName: "What color is this?",
+      questionHex: "What's this color code?",
+      questionSwatch: "Which one is the same color?",
+      correctWithName: function (name) { return "✓ Correct! \"" + name + "\""; },
+      correctGeneric: "✓ Correct!",
+      wrong: "✗ Not quite. Try again!",
+      nextQuestion: "Next question",
+      seeResults: "See results",
+      hexCorrectLabel: "Correct code",
+      swatchCorrectLabel: "Correct color",
+      correctTag: "(correct)",
+      nearTo: function (name) { return "close to " + name; },
+      resultTitleTemplate: function (label, phrase) { return label + " — " + phrase; },
+      resultPerfect: "Perfect score!",
+      resultGreat: "Great job!",
+      resultGood: "Nice effort!",
+      resultTryAgain: "Give it another try!",
+      statFirstLabel: "First-try correct",
+      statBestLabel: "Best score",
+      retry: "Play again",
+      chooseAnother: "Choose another level",
+      share: "Share result",
+      shareText: function (label, correct, total) {
+        return "I scored " + correct + "/" + total + " (best) on \"" + label + "\" in What Color Is This?!";
+      },
+      hintShow: "Show hint",
+      hintHide: "Hide hint",
+      hintPosR: "Digits 1-2 (R)",
+      hintPosG: "Digits 3-4 (G)",
+      hintPosB: "Digits 5-6 (B)",
+      hintLegend: "Guide: 00-32 = very dark, 33-65 = dark, 66-98 = mid, 99-CB = light, CC-FF = very light",
+      bucketVeryDark: "very dark",
+      bucketDark: "dark",
+      bucketMid: "mid",
+      bucketLight: "light",
+      bucketVeryLight: "very light",
+      thisIsTarget: "Correct",
+      magFaint: "Slightly",
+      magSlight: "A bit",
+      brighterWord: "brighter",
+      darkerWord: "darker",
+      brightTemplate: function (mag, word) { return mag + " " + word; },
+      hueTemplate: function (mag, word) { return "Leans " + mag.toLowerCase() + " " + word; },
+      redWord: "red",
+      cyanWord: "cyan",
+      greenWord: "green",
+      magentaWord: "magenta",
+      blueWord: "blue",
+      yellowWord: "yellow",
+      optionAria: "color option",
+      levels: {
+        beginner: { label: "Beginner", desc: "Guess everyday colors" },
+        intermediate: { label: "Intermediate", desc: "Try some subtler shades" },
+        advanced: { label: "Advanced", desc: "Tell apart subtle Japanese traditional colors (names stay in Japanese)" },
+        extreme: { label: "Extreme", desc: "Pick the right code from 4 similar ones" },
+        discern: { label: "Is This Shade #256 Too?", desc: "They look identical, but aren't — can you tell?" }
+      }
+    }
+  };
+
+  var els = {
+    views: {
+      title: document.getElementById("view-title"),
+      quiz: document.getElementById("view-quiz"),
+      result: document.getElementById("view-result")
+    },
+    levelList: document.getElementById("level-list"),
+    progressText: document.getElementById("progress-text"),
+    colorSquare: document.getElementById("color-square"),
+    squareLabel: document.getElementById("square-label"),
+    slHex: document.getElementById("sl-hex"),
+    slName: document.getElementById("sl-name"),
+    questionText: document.getElementById("question-text"),
+    hintBtn: document.getElementById("hint-btn"),
+    hintText: document.getElementById("hint-text"),
+    choices: document.getElementById("choices"),
+    feedback: document.getElementById("feedback"),
+    explainPanel: document.getElementById("explain-panel"),
+    explainChip: document.getElementById("explain-chip"),
+    explainName: document.getElementById("explain-name"),
+    explainHex: document.getElementById("explain-hex"),
+    explainText: document.getElementById("explain-text"),
+    explainOptions: document.getElementById("explain-options"),
+    explainNext: document.getElementById("explain-next"),
+    quitBtn: document.getElementById("quit-btn"),
+    resultTitle: document.getElementById("result-title"),
+    statFirstLabel: document.getElementById("stat-first-label"),
+    statBestLabel: document.getElementById("stat-best-label"),
+    statFirst: document.getElementById("stat-first"),
+    statBest: document.getElementById("stat-best"),
+    retryBtn: document.getElementById("retry-btn"),
+    shareBtn: document.getElementById("share-btn"),
+    shareBtnLabel: document.getElementById("share-btn-label"),
+    backBtn: document.getElementById("back-btn"),
+    langToggle: document.getElementById("lang-toggle"),
+    muteToggle: document.getElementById("mute-toggle"),
+    gameTitle: document.getElementById("game-title"),
+    gameSub: document.getElementById("game-sub"),
+    footerPrivacy: document.getElementById("footer-privacy"),
+    footerAbout: document.getElementById("footer-about")
+  };
+
+  var savedLang = null;
+  try { savedLang = window.localStorage.getItem("colorquiz-lang"); } catch (e) { /* ignore */ }
+  var savedMuted = null;
+  try { savedMuted = window.localStorage.getItem("colorquiz-muted"); } catch (e) { /* ignore */ }
+
+  var state = {
+    lang: savedLang === "en" ? "en" : "ja",
+    muted: savedMuted === "1",
+    levelKey: null,
+    questions: [],
+    index: 0,
+    firstTryCorrectCount: 0,
+    isFirstAttemptOnThisQuestion: true,
+    locked: false,
+    resultBest: 0,
+    resultTotal: 0
+  };
+
+  var audioCtx = null;
+  function getAudioCtx() {
+    if (audioCtx) return audioCtx;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch (e) {
+      audioCtx = null;
+    }
+    return audioCtx;
+  }
+
+  function playTone(freq, startTime, duration, type, gainPeak) {
+    var ctx = getAudioCtx();
+    if (!ctx) return;
+    if (ctx.state === "suspended") { ctx.resume(); }
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = type || "sine";
+    osc.frequency.value = freq;
+    var t0 = ctx.currentTime + startTime;
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.linearRampToValueAtTime(gainPeak, t0 + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.03);
+  }
+
+  function playCorrectSound() {
+    if (state.muted) return;
+    playTone(784, 0, 0.16, "sine", 0.16);
+    playTone(1046, 0.12, 0.26, "sine", 0.17);
+  }
+
+  function playWrongSound() {
+    if (state.muted) return;
+    playTone(180, 0, 0.2, "sawtooth", 0.12);
+  }
+
+  function playResultFanfare(ratio) {
+    if (state.muted) return;
+    if (ratio >= 1) {
+      // Rising run into a sustained, layered major chord — big achievement.
+      playTone(523, 0, 0.16, "sine", 0.14);
+      playTone(659, 0.13, 0.16, "sine", 0.14);
+      playTone(784, 0.26, 0.16, "sine", 0.14);
+      playTone(1046, 0.39, 0.62, "sine", 0.18);
+      playTone(1318, 0.39, 0.62, "sine", 0.11);
+      playTone(784, 0.39, 0.62, "sine", 0.09);
+      playTone(1568, 0.58, 0.46, "sine", 0.1);
+    } else if (ratio >= 0.8) {
+      // Shorter rising run into a warm two-note chord — solid achievement.
+      playTone(587, 0, 0.15, "sine", 0.15);
+      playTone(740, 0.12, 0.15, "sine", 0.15);
+      playTone(880, 0.24, 0.5, "sine", 0.17);
+      playTone(1108, 0.24, 0.5, "sine", 0.1);
+    } else if (ratio >= 0.5) {
+      // Gently wavering, gradually settling — neutral, gets the point across without disappointment.
+      playTone(494, 0, 0.2, "sine", 0.13);
+      playTone(440, 0.2, 0.2, "sine", 0.12);
+      playTone(466, 0.4, 0.46, "sine", 0.12);
+    } else {
+      // Longer descending minor-ish motif settling low — clear but soft sense of letdown.
+      playTone(392, 0, 0.18, "sine", 0.12);
+      playTone(349, 0.16, 0.18, "sine", 0.11);
+      playTone(311, 0.32, 0.2, "sine", 0.1);
+      playTone(262, 0.48, 0.55, "sine", 0.1);
+    }
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function buildChoices(levelKey, correctColor) {
+    var pool = LEVELS[levelKey].colors.filter(function (c) { return c.hex !== correctColor.hex; });
+    var distractors = shuffle(pool).slice(0, 3);
+    return shuffle(distractors.concat([correctColor]));
+  }
+
+  function randomChannel() {
+    return Math.floor(Math.random() * 256);
+  }
+
+  function rgbToHex(r, g, b) {
+    return "#" + [r, g, b].map(function (v) {
+      var s = v.toString(16).toUpperCase();
+      return s.length < 2 ? "0" + s : s;
+    }).join("");
+  }
+
+  function hexToRgb(hex) {
+    var h = hex.replace("#", "");
+    var num = parseInt(h, 16);
+    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+  }
+
+  function colorLabel(c) {
+    if (!c) return "";
+    return (state.lang === "en" && c.name_en) ? c.name_en : c.name;
+  }
+
+  function levelLabel(key) {
+    return STRINGS[state.lang].levels[key].label;
+  }
+
+  function levelDesc(key) {
+    return STRINGS[state.lang].levels[key].desc;
+  }
+
+  function generateRandomColor() {
+    var r = randomChannel(), g = randomChannel(), b = randomChannel();
+    return { hex: rgbToHex(r, g, b) };
+  }
+
+  function clamp255(v) {
+    return Math.max(0, Math.min(255, v));
+  }
+
+  function jitterRgb(rgb, minMag, maxMag) {
+    var out = { r: rgb.r, g: rgb.g, b: rgb.b };
+    ["r", "g", "b"].forEach(function (c) {
+      if (Math.random() < 0.85) {
+        var mag = minMag + Math.random() * (maxMag - minMag);
+        var sign = Math.random() < 0.5 ? -1 : 1;
+        out[c] = clamp255(Math.round(out[c] + sign * mag));
+      }
+    });
+    return out;
+  }
+
+  function rgbEqual(a, b) {
+    return a.r === b.r && a.g === b.g && a.b === b.b;
+  }
+
+  function generateDistinctVariants(baseRgb, minMag, maxMag, n) {
+    var set = [];
+    var guard = 0;
+    while (set.length < n && guard < 300) {
+      guard++;
+      var cand = jitterRgb(baseRgb, minMag, maxMag);
+      if (rgbEqual(cand, baseRgb)) continue;
+      if (set.some(function (s) { return rgbEqual(s, cand); })) continue;
+      set.push(cand);
+    }
+    return set;
+  }
+
+  function generateHexChoiceQuestion() {
+    var baseRgb = { r: randomChannel(), g: randomChannel(), b: randomChannel() };
+    var distractors = generateDistinctVariants(baseRgb, 25, 70, 3);
+    var target = { hex: rgbToHex(baseRgb.r, baseRgb.g, baseRgb.b) };
+    var options = distractors.map(function (rgb) { return { hex: rgbToHex(rgb.r, rgb.g, rgb.b) }; });
+    options.push(target);
+    return { target: target, options: shuffle(options) };
+  }
+
+  function randomBrightChannel() {
+    // Keep the base tone light-to-mid so a small jitter reads as "barely different"
+    // instead of a different hue entirely (very dark bases exaggerate small shifts).
+    return Math.floor(120 + Math.random() * 136);
+  }
+
+  function generateSwatchQuestion() {
+    var baseRgb = { r: randomBrightChannel(), g: randomBrightChannel(), b: randomBrightChannel() };
+    var distractors = generateDistinctVariants(baseRgb, 3, 12, 3);
+    var target = { hex: rgbToHex(baseRgb.r, baseRgb.g, baseRgb.b) };
+    var options = distractors.map(function (rgb) { return { hex: rgbToHex(rgb.r, rgb.g, rgb.b) }; });
+    options.push(target);
+    return { target: target, options: shuffle(options) };
+  }
+
+  var NAMED_INDEX = [];
+  ["beginner", "intermediate", "advanced"].forEach(function (k) {
+    LEVELS[k].colors.forEach(function (c) {
+      NAMED_INDEX.push(c);
+    });
+  });
+
+  function nearestColorName(hex) {
+    var rgb = hexToRgb(hex);
+    var best = null, bestDist = Infinity;
+    NAMED_INDEX.forEach(function (c) {
+      var crgb = hexToRgb(c.hex);
+      var dr = rgb.r - crgb.r, dg = rgb.g - crgb.g, db = rgb.b - crgb.b;
+      var d = dr * dr + dg * dg + db * db;
+      if (d < bestDist) { bestDist = d; best = c; }
+    });
+    return best;
+  }
+
+  function relativeDescriptor(opt, target, s) {
+    var a = hexToRgb(opt.hex), b = hexToRgb(target.hex);
+    var dr = a.r - b.r, dg = a.g - b.g, db = a.b - b.b;
+    var avg = (dr + dg + db) / 3;
+    var spread = Math.max(Math.abs(dr - avg), Math.abs(dg - avg), Math.abs(db - avg));
+    if (spread < 4) {
+      var bMag = Math.abs(avg) < 6 ? s.magFaint : s.magSlight;
+      var bDir = avg > 0 ? s.brighterWord : s.darkerWord;
+      return s.brightTemplate(bMag, bDir);
+    }
+    var diffs = [dr, dg, db];
+    var absDiffs = [Math.abs(dr), Math.abs(dg), Math.abs(db)];
+    var idx = absDiffs.indexOf(Math.max.apply(Math, absDiffs));
+    var mag = absDiffs[idx] < 6 ? s.magFaint : s.magSlight;
+    var labels = [[s.redWord, s.cyanWord], [s.greenWord, s.magentaWord], [s.blueWord, s.yellowWord]];
+    var word = diffs[idx] > 0 ? labels[idx][0] : labels[idx][1];
+    return s.hueTemplate(mag, word);
+  }
+
+  function bucketLabel(v, s) {
+    if (v < 0x33) return s.bucketVeryDark;
+    if (v < 0x66) return s.bucketDark;
+    if (v < 0x99) return s.bucketMid;
+    if (v < 0xCC) return s.bucketLight;
+    return s.bucketVeryLight;
+  }
+
+  function showView(name) {
+    Object.keys(els.views).forEach(function (k) {
+      els.views[k].classList.toggle("active", k === name);
+    });
+  }
+
+  function getBest(levelKey, total) {
+    try {
+      var raw = window.localStorage.getItem("colorquiz-best-" + levelKey);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed.correct !== "number" || parsed.total !== total) return null;
+      return parsed.correct;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setBest(levelKey, correct, total) {
+    try {
+      window.localStorage.setItem("colorquiz-best-" + levelKey, JSON.stringify({ correct: correct, total: total }));
+    } catch (e) {
+      /* storage unavailable, ignore */
+    }
+  }
+
+  function buildLevelList() {
+    els.levelList.innerHTML = "";
+    LEVEL_ORDER.forEach(function (key) {
+      var level = LEVELS[key];
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "level-card";
+
+      var head = document.createElement("div");
+      head.className = "level-head";
+      var name = document.createElement("span");
+      name.className = "level-name";
+      name.textContent = levelLabel(key);
+      var desc = document.createElement("span");
+      desc.className = "level-desc";
+      desc.textContent = levelDesc(key);
+      head.appendChild(name);
+      head.appendChild(desc);
+
+      var swatchRow = document.createElement("div");
+      swatchRow.className = "swatch-row";
+      var previewColors = level.colors ? level.colors.slice(0, 3) : [generateRandomColor(), generateRandomColor(), generateRandomColor()];
+      previewColors.forEach(function (c) {
+        var sw = document.createElement("span");
+        sw.className = "swatch";
+        sw.style.background = c.hex;
+        swatchRow.appendChild(sw);
+      });
+
+      card.appendChild(head);
+      card.appendChild(swatchRow);
+      card.addEventListener("click", function () { startLevel(key); });
+      els.levelList.appendChild(card);
+    });
+  }
+
+  function refreshStaticTexts() {
+    var s = STRINGS[state.lang];
+    document.title = s.title;
+    els.gameTitle.textContent = s.title;
+    els.gameSub.textContent = s.subtitle;
+    els.langToggle.textContent = s.langToggle;
+    els.quitBtn.textContent = s.back;
+    els.retryBtn.textContent = s.retry;
+    els.backBtn.textContent = s.chooseAnother;
+    els.shareBtnLabel.textContent = s.share;
+    els.footerPrivacy.textContent = s.footerPrivacy;
+    els.footerAbout.textContent = s.footerAbout;
+    buildLevelList();
+  }
+
+  function startLevel(key) {
+    state.levelKey = key;
+    var level = LEVELS[key];
+    state.index = 0;
+    state.firstTryCorrectCount = 0;
+    var count = level.count;
+    if (level.mode === "name") {
+      state.questions = shuffle(level.colors).slice(0, count || level.colors.length);
+    } else if (level.mode === "hexChoice") {
+      state.questions = [];
+      for (var i = 0; i < count; i++) {
+        state.questions.push(generateHexChoiceQuestion());
+      }
+    } else if (level.mode === "swatch") {
+      state.questions = [];
+      for (var j = 0; j < count; j++) {
+        state.questions.push(generateSwatchQuestion());
+      }
+    }
+    showView("quiz");
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    state.isFirstAttemptOnThisQuestion = true;
+    state.locked = false;
+    var level = LEVELS[state.levelKey];
+    var s = STRINGS[state.lang];
+    var total = state.questions.length;
+    var entry = state.questions[state.index];
+    var displayHex = level.mode === "name" ? entry.hex : entry.target.hex;
+
+    els.progressText.textContent = levelLabel(state.levelKey) + " ・ " + (state.index + 1) + " / " + total;
+    els.colorSquare.style.background = displayHex;
+    els.colorSquare.classList.remove("shake");
+    els.squareLabel.classList.remove("show");
+    els.feedback.className = "feedback";
+    els.feedback.textContent = "";
+    els.explainPanel.style.display = "none";
+
+    if (level.mode === "swatch") {
+      els.questionText.textContent = s.questionSwatch;
+    } else if (level.mode === "hexChoice") {
+      els.questionText.textContent = s.questionHex;
+    } else {
+      els.questionText.textContent = s.questionName;
+    }
+
+    if (level.mode === "hexChoice") {
+      els.hintBtn.style.display = "inline-block";
+      els.hintBtn.disabled = false;
+      els.hintBtn.textContent = s.hintShow;
+      els.hintText.classList.remove("show");
+      els.hintText.textContent = "";
+    } else {
+      els.hintBtn.style.display = "none";
+      els.hintText.classList.remove("show");
+    }
+
+    els.choices.style.display = "grid";
+    renderChoices();
+  }
+
+  function renderChoices() {
+    var level = LEVELS[state.levelKey];
+    var s = STRINGS[state.lang];
+    var entry = state.questions[state.index];
+    var options = level.mode === "name" ? buildChoices(state.levelKey, entry) : entry.options;
+    state.currentOptions = options;
+    els.choices.innerHTML = "";
+    options.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      if (level.mode === "swatch") {
+        btn.classList.add("choice-swatch");
+        btn.style.background = opt.hex;
+        btn.setAttribute("aria-label", s.optionAria);
+      } else if (level.mode === "hexChoice") {
+        btn.classList.add("choice-hex");
+        btn.textContent = opt.hex;
+      } else {
+        btn.textContent = colorLabel(opt);
+      }
+      btn.addEventListener("click", function () { selectChoice(btn, opt); });
+      els.choices.appendChild(btn);
+    });
+  }
+
+  function prependMark(button, mark) {
+    var iconSpan = document.createElement("span");
+    iconSpan.className = "choice-text-mark";
+    iconSpan.textContent = mark + " ";
+    button.insertBefore(iconSpan, button.firstChild);
+  }
+
+  function buildSwatchReveal(mark, opt, current, s) {
+    var wrap = document.createElement("span");
+    wrap.className = "choice-reveal";
+    var markEl = document.createElement("span");
+    markEl.className = "choice-mark";
+    markEl.textContent = mark;
+    var info = document.createElement("span");
+    info.className = "choice-info";
+    var hexEl = document.createElement("span");
+    hexEl.className = "choice-info-hex";
+    hexEl.textContent = opt.hex;
+    info.appendChild(hexEl);
+    if (opt.hex !== current.hex) {
+      var nameEl = document.createElement("span");
+      nameEl.className = "choice-info-name";
+      nameEl.textContent = relativeDescriptor(opt, current, s);
+      info.appendChild(nameEl);
+    }
+    wrap.appendChild(markEl);
+    wrap.appendChild(info);
+    return wrap;
+  }
+
+  function selectChoice(button, chosen) {
+    if (state.locked) return;
+    var level = LEVELS[state.levelKey];
+    var s = STRINGS[state.lang];
+    var entry = state.questions[state.index];
+    var current = level.mode === "name" ? entry : entry.target;
+    var isCorrect = chosen.hex === current.hex;
+
+    if (isCorrect) {
+      state.locked = true;
+      playCorrectSound();
+      if (state.isFirstAttemptOnThisQuestion) state.firstTryCorrectCount++;
+      button.classList.add("is-correct");
+      if (level.mode === "swatch") {
+        button.appendChild(buildSwatchReveal("✓", chosen, current, s));
+      } else {
+        prependMark(button, "✓");
+      }
+      Array.prototype.forEach.call(els.choices.children, function (b) { b.disabled = true; });
+      els.feedback.className = "feedback show good";
+      els.feedback.textContent = level.mode === "name" ? s.correctWithName(colorLabel(current)) : s.correctGeneric;
+      showExplanation(level, current, entry);
+    } else {
+      state.isFirstAttemptOnThisQuestion = false;
+      playWrongSound();
+      button.classList.add("is-wrong");
+      button.disabled = true;
+      if (level.mode === "swatch") {
+        button.appendChild(buildSwatchReveal("✗", chosen, current, s));
+      } else {
+        prependMark(button, "✗");
+      }
+      els.feedback.className = "feedback show bad";
+      els.feedback.textContent = s.wrong;
+      els.colorSquare.classList.remove("shake");
+      void els.colorSquare.offsetWidth;
+      els.colorSquare.classList.add("shake");
+    }
+  }
+
+  function buildExplainOptionRow(o, isCorrectOpt, s, mode, current) {
+    var row = document.createElement("div");
+    row.className = "explain-option" + (isCorrectOpt ? " is-correct-opt" : "");
+    var chip = document.createElement("span");
+    chip.className = "explain-option-chip";
+    chip.style.background = o.hex;
+    var hexSpan = document.createElement("span");
+    hexSpan.className = "explain-option-hex";
+    hexSpan.textContent = (isCorrectOpt ? "★ " : "") + o.hex;
+    row.appendChild(chip);
+    row.appendChild(hexSpan);
+    if (mode === "swatch") {
+      if (!isCorrectOpt) {
+        var nameSpan = document.createElement("span");
+        nameSpan.className = "explain-option-name";
+        nameSpan.textContent = relativeDescriptor(o, current, s);
+        row.appendChild(nameSpan);
+      }
+    } else {
+      var nameSpan2 = document.createElement("span");
+      nameSpan2.className = "explain-option-name";
+      var nearest = nearestColorName(o.hex);
+      nameSpan2.textContent = nearest ? s.nearTo(colorLabel(nearest)) : "";
+      row.appendChild(nameSpan2);
+    }
+    return row;
+  }
+
+  function showExplanation(level, current, entry) {
+    var s = STRINGS[state.lang];
+    els.explainChip.style.background = current.hex;
+    els.explainHex.textContent = current.hex;
+    els.explainOptions.innerHTML = "";
+    els.explainOptions.classList.remove("show");
+    els.explainText.style.display = "block";
+
+    if (level.mode === "name") {
+      els.explainName.textContent = colorLabel(current);
+      els.explainText.textContent = (state.lang === "en" && current.info_en) ? current.info_en : (current.info || "");
+    } else {
+      els.explainText.style.display = "none";
+      els.explainOptions.classList.add("show");
+      els.explainName.textContent = level.mode === "hexChoice" ? s.hexCorrectLabel : s.swatchCorrectLabel;
+      entry.options.forEach(function (o) {
+        els.explainOptions.appendChild(buildExplainOptionRow(o, o.hex === current.hex, s, level.mode, current));
+      });
+    }
+
+    if (level.mode === "swatch") {
+      els.squareLabel.classList.add("show");
+      els.slHex.textContent = current.hex;
+      var nearestSelf = nearestColorName(current.hex);
+      els.slName.textContent = nearestSelf ? s.nearTo(colorLabel(nearestSelf)) : "";
+    }
+
+    var isLast = state.index + 1 >= state.questions.length;
+    els.explainNext.textContent = isLast ? s.seeResults : s.nextQuestion;
+
+    els.explainPanel.style.display = "flex";
+    els.explainPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function nextQuestion() {
+    if (state.index + 1 < state.questions.length) {
+      state.index++;
+      renderQuestion();
+    } else {
+      finishLevel();
+    }
+  }
+
+  function finishLevel() {
+    var s = STRINGS[state.lang];
+    var total = state.questions.length;
+    var best = getBest(state.levelKey, total);
+    if (best === null || state.firstTryCorrectCount > best) {
+      setBest(state.levelKey, state.firstTryCorrectCount, total);
+      best = state.firstTryCorrectCount;
+    }
+    state.resultBest = best;
+    state.resultTotal = total;
+    var ratio = total > 0 ? state.firstTryCorrectCount / total : 0;
+    var phrase = ratio >= 1 ? s.resultPerfect : ratio >= 0.8 ? s.resultGreat : ratio >= 0.5 ? s.resultGood : s.resultTryAgain;
+    els.resultTitle.textContent = s.resultTitleTemplate(levelLabel(state.levelKey), phrase);
+    els.statFirstLabel.textContent = s.statFirstLabel;
+    els.statFirst.textContent = state.firstTryCorrectCount + " / " + total;
+    els.statBestLabel.textContent = s.statBestLabel;
+    els.statBest.textContent = best + " / " + total;
+    showView("result");
+    playResultFanfare(ratio);
+  }
+
+  function shareResult() {
+    var s = STRINGS[state.lang];
+    var text = s.shareText(levelLabel(state.levelKey), state.resultBest, state.resultTotal);
+
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () { /* user cancelled or unsupported */ });
+      return;
+    }
+    window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text), "_blank", "noopener");
+  }
+
+  function buildHintMap(rgb, s) {
+    var wrap = document.createElement("div");
+    wrap.className = "hint-map";
+    var channels = [
+      { cls: "chip-r", label: s.hintPosR, val: bucketLabel(rgb.r, s) },
+      { cls: "chip-g", label: s.hintPosG, val: bucketLabel(rgb.g, s) },
+      { cls: "chip-b", label: s.hintPosB, val: bucketLabel(rgb.b, s) }
+    ];
+    channels.forEach(function (c) {
+      var chip = document.createElement("div");
+      chip.className = "hint-map-chip " + c.cls;
+      var pos = document.createElement("span");
+      pos.className = "pos";
+      pos.textContent = c.label;
+      var val = document.createElement("span");
+      val.className = "val";
+      val.textContent = c.val;
+      chip.appendChild(pos);
+      chip.appendChild(val);
+      wrap.appendChild(chip);
+    });
+    return wrap;
+  }
+
+  els.hintBtn.addEventListener("click", function () {
+    if (state.locked) return;
+    var s = STRINGS[state.lang];
+    var entry = state.questions[state.index];
+    var rgb = hexToRgb(entry.target.hex);
+    var showing = els.hintText.classList.toggle("show");
+    if (showing) {
+      els.hintText.innerHTML = "";
+      els.hintText.appendChild(buildHintMap(rgb, s));
+      var legend = document.createElement("div");
+      legend.className = "hint-legend";
+      legend.textContent = s.hintLegend;
+      els.hintText.appendChild(legend);
+      els.hintBtn.textContent = s.hintHide;
+    } else {
+      els.hintBtn.textContent = s.hintShow;
+    }
+  });
+
+  els.langToggle.addEventListener("click", function () {
+    state.lang = state.lang === "ja" ? "en" : "ja";
+    try { window.localStorage.setItem("colorquiz-lang", state.lang); } catch (e) { /* ignore */ }
+    refreshStaticTexts();
+  });
+
+  function updateMuteIcon() {
+    els.muteToggle.textContent = state.muted ? "🔇" : "🔊";
+    els.muteToggle.setAttribute("aria-label", state.muted ? "Unmute sound effects" : "Mute sound effects");
+  }
+
+  els.muteToggle.addEventListener("click", function () {
+    state.muted = !state.muted;
+    try { window.localStorage.setItem("colorquiz-muted", state.muted ? "1" : "0"); } catch (e) { /* ignore */ }
+    updateMuteIcon();
+  });
+
+  els.explainNext.addEventListener("click", nextQuestion);
+  els.quitBtn.addEventListener("click", function () { showView("title"); });
+  els.retryBtn.addEventListener("click", function () { startLevel(state.levelKey); });
+  els.shareBtn.addEventListener("click", shareResult);
+  els.backBtn.addEventListener("click", function () { showView("title"); });
+
+  refreshStaticTexts();
+  updateMuteIcon();
+})();
+</script>
+</body>
+</html>
