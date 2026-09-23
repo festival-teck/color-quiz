@@ -181,6 +181,21 @@
     gap: 14px;
   }
 
+  .site-footer {
+    width: 100%;
+    margin-top: 22px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+
   .level-card {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -787,6 +802,11 @@
     <h1 class="game-title" id="game-title">これは何色？</h1>
     <p class="game-sub" id="game-sub">正方形の色を当てるだけのシンプルなゲーム</p>
     <div class="level-list" id="level-list"></div>
+    <div class="site-footer">
+      <a id="footer-privacy" href="privacy.html">プライバシーポリシー</a>
+      <span class="footer-sep" aria-hidden="true">・</span>
+      <a id="footer-about" href="about.html">運営者情報</a>
+    </div>
   </div>
 </div>
 
@@ -965,6 +985,8 @@
     ja: {
       title: "これは何色？",
       subtitle: "正方形の色を当てるだけのシンプルなゲーム",
+      footerPrivacy: "プライバシーポリシー",
+      footerAbout: "運営者情報",
       langToggle: "EN",
       back: "← レベル選択",
       questionName: "これは何色？",
@@ -1028,6 +1050,8 @@
     en: {
       title: "What Color Is This?",
       subtitle: "A simple game — just guess the color of the square",
+      footerPrivacy: "Privacy Policy",
+      footerAbout: "About",
       langToggle: "日本語",
       back: "← Levels",
       questionName: "What color is this?",
@@ -1127,7 +1151,9 @@
     langToggle: document.getElementById("lang-toggle"),
     muteToggle: document.getElementById("mute-toggle"),
     gameTitle: document.getElementById("game-title"),
-    gameSub: document.getElementById("game-sub")
+    gameSub: document.getElementById("game-sub"),
+    footerPrivacy: document.getElementById("footer-privacy"),
+    footerAbout: document.getElementById("footer-about")
   };
 
   var savedLang = null;
@@ -1444,6 +1470,8 @@
     els.retryBtn.textContent = s.retry;
     els.backBtn.textContent = s.chooseAnother;
     els.shareBtnLabel.textContent = s.share;
+    els.footerPrivacy.textContent = s.footerPrivacy;
+    els.footerAbout.textContent = s.footerAbout;
     buildLevelList();
   }
 
