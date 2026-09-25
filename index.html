@@ -12,6 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-7LV1VCP5BG');
 </script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -195,6 +203,10 @@
     text-align: center;
     font-size: 0.78rem;
     color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
   }
   .site-footer a {
     color: var(--ink-soft);
@@ -803,6 +815,7 @@
     </svg>
   </div>
   <div class="title-controls">
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
     <button class="icon-toggle" id="mute-toggle" type="button" aria-label="Mute sound effects">🔊</button>
     <button class="lang-toggle" id="lang-toggle" type="button">EN</button>
   </div>
@@ -811,9 +824,15 @@
     <p class="game-sub" id="game-sub">正方形の色を当てるだけのシンプルなゲーム</p>
     <div class="level-list" id="level-list"></div>
     <div class="site-footer">
-      <a id="footer-privacy" href="privacy.html">プライバシーポリシー</a>
+      <a id="footer-usage" href="usage.html">使い方</a>
+      <span class="footer-sep" aria-hidden="true">・</span>
+      <a id="footer-faq" href="faq.html">よくある質問</a>
       <span class="footer-sep" aria-hidden="true">・</span>
       <a id="footer-about" href="about.html">運営者情報</a>
+      <span class="footer-sep" aria-hidden="true">・</span>
+      <a id="footer-privacy" href="privacy.html">プライバシーポリシー</a>
+      <span class="footer-sep" aria-hidden="true">・</span>
+      <a id="footer-contact" href="contact.html">お問い合わせ</a>
     </div>
   </div>
 </div>
@@ -993,8 +1012,11 @@
     ja: {
       title: "これは何色？",
       subtitle: "正方形の色を当てるだけのシンプルなゲーム",
+      footerUsage: "使い方",
+      footerFaq: "よくある質問",
       footerPrivacy: "プライバシーポリシー",
       footerAbout: "運営者情報",
+      footerContact: "お問い合わせ",
       langToggle: "EN",
       back: "← レベル選択",
       questionName: "これは何色？",
@@ -1058,8 +1080,11 @@
     en: {
       title: "What Color Is This?",
       subtitle: "A simple game — just guess the color of the square",
+      footerUsage: "How to Play",
+      footerFaq: "FAQ",
       footerPrivacy: "Privacy Policy",
       footerAbout: "About",
+      footerContact: "Contact",
       langToggle: "日本語",
       back: "← Levels",
       questionName: "What color is this?",
@@ -1158,10 +1183,14 @@
     backBtn: document.getElementById("back-btn"),
     langToggle: document.getElementById("lang-toggle"),
     muteToggle: document.getElementById("mute-toggle"),
+    themeToggle: document.getElementById("theme-toggle"),
     gameTitle: document.getElementById("game-title"),
     gameSub: document.getElementById("game-sub"),
+    footerUsage: document.getElementById("footer-usage"),
+    footerFaq: document.getElementById("footer-faq"),
     footerPrivacy: document.getElementById("footer-privacy"),
-    footerAbout: document.getElementById("footer-about")
+    footerAbout: document.getElementById("footer-about"),
+    footerContact: document.getElementById("footer-contact")
   };
 
   var savedLang = null;
@@ -1478,8 +1507,11 @@
     els.retryBtn.textContent = s.retry;
     els.backBtn.textContent = s.chooseAnother;
     els.shareBtnLabel.textContent = s.share;
+    els.footerUsage.textContent = s.footerUsage;
+    els.footerFaq.textContent = s.footerFaq;
     els.footerPrivacy.textContent = s.footerPrivacy;
     els.footerAbout.textContent = s.footerAbout;
+    els.footerContact.textContent = s.footerContact;
     buildLevelList();
   }
 
@@ -1803,6 +1835,32 @@
     state.muted = !state.muted;
     try { window.localStorage.setItem("colorquiz-muted", state.muted ? "1" : "0"); } catch (e) { /* ignore */ }
     updateMuteIcon();
+  });
+
+  function getEffectiveTheme() {
+    var stored = null;
+    try { stored = window.localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+    if (stored === "light" || stored === "dark") return stored;
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+
+  function updateThemeIcon(theme) {
+    els.themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    els.themeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+
+  (function initTheme() {
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateThemeIcon(current);
+  })();
+
+  els.themeToggle.addEventListener("click", function () {
+    var current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    var next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { window.localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+    updateThemeIcon(next);
   });
 
   els.explainNext.addEventListener("click", nextQuestion);

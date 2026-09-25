@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>運営者情報 | これは何色？</title>
+<title>よくある質問 | これは何色？</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
 <script>
@@ -101,36 +101,31 @@
     font-weight: 900;
     margin: 0 0 20px;
   }
-  h2 {
-    font-size: 1.08rem;
-    font-weight: 700;
-    margin: 28px 0 10px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
-  p {
-    margin: 0 0 14px;
-    font-size: 0.95rem;
-    color: var(--ink);
-  }
-  dl { margin: 0; }
-  dt {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    margin-top: 14px;
-  }
-  dt:first-child { margin-top: 0; }
-  dd {
-    margin: 4px 0 0;
-    font-size: 0.98rem;
-  }
   a { color: var(--accent); }
   .panel {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 24px 24px 8px;
+    padding: 8px 24px 8px;
+  }
+  .qa {
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .qa:first-child { border-top: none; }
+  .q {
+    font-size: 0.98rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    display: flex;
+    gap: 8px;
+  }
+  .q .mark { color: var(--accent); flex-shrink: 0; }
+  .a {
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+    margin: 0;
+    padding-left: 24px;
   }
   .site-footer {
     width: 100%;
@@ -159,27 +154,36 @@
     <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
   </div>
   <div class="panel">
-    <h1>運営者情報</h1>
+    <h1>よくある質問</h1>
 
-    <h2>運営者</h2>
-    <dl>
-      <dt>運営者名</dt>
-      <dd>ふぉんD</dd>
-      <dt>連絡先</dt>
-      <dd><a href="contact.html">お問い合わせページ</a>よりご連絡ください</dd>
-    </dl>
-
-    <h2>サイトについて</h2>
-    <p>「これは何色？」は、正方形に塗られた色の名前やカラーコードを当てて遊ぶ、無料のミニゲームサイトです。</p>
-    <p>会員登録やインストールは不要で、すべての機能はブラウザ内の処理のみで完結します。入力や選択の内容がサーバーに送信されることはなく、自己ベストの記録もお使いのブラウザ内にのみ保存されます。</p>
-    <p>QAエンジニアとしての実務経験をもとに、正確な動作を心がけて開発・運営しています。</p>
-
-    <h2>掲載情報について</h2>
-    <p>当サイトに掲載している色の名称・カラーコード・解説等については、できる限り正確な情報を提供するよう努めていますが、内容の正確性・完全性を保証するものではありません。</p>
-    <p>重要な用途でご利用の際は、必ずご自身でのご確認をお願いいたします。</p>
-
-    <h2>広告について</h2>
-    <p>当サイトは、Google AdSenseなど第三者配信の広告サービスを利用する場合があります。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>入力内容やスコアはサーバーに送信されますか？</p>
+      <p class="a">A. されません。すべての処理はご利用のブラウザ内で完結しており、自己ベストの記録も含めて外部サーバーへ送信されることはありません（お使いのブラウザのlocalStorageにのみ保存されます）。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>会員登録や料金は必要ですか？</p>
+      <p class="a">A. 会員登録・インストールは不要で、すべての機能を無料でご利用いただけます。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>スマートフォンでも遊べますか？</p>
+      <p class="a">A. はい。スマートフォン・タブレット・PCのブラウザに対応しています。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>自己ベストの記録はどこに保存されますか？</p>
+      <p class="a">A. お使いのブラウザのlocalStorageに保存されます。ブラウザやデバイスを変えたり、サイトデータ・閲覧履歴を削除したりすると記録は失われますのでご注意ください。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>「上級」の和色を英語表示にできますか？</p>
+      <p class="a">A. 上級レベルは日本語の伝統色名を楽しむことを目的としているため、日本語表記のみとなっています。それ以外のレベルは、画面右上の言語切り替えボタンから日本語⇔英語を切り替えられます。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>効果音を消したいです。</p>
+      <p class="a">A. 画面右上のスピーカーアイコンをタップ・クリックするとミュートできます。設定はブラウザに保存され、次回アクセス時も引き継がれます。</p>
+    </div>
+    <div class="qa">
+      <p class="q"><span class="mark">Q.</span>不具合の報告や要望はどこに送ればいいですか？</p>
+      <p class="a">A. <a href="contact.html">お問い合わせページ</a>のフォームよりお送りください。</p>
+    </div>
   </div>
   <div class="site-footer">
     <a href="usage.html">使い方</a>

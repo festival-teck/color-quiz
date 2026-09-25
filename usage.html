@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>運営者情報 | これは何色？</title>
+<title>使い方 | これは何色？</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
 <script>
@@ -114,17 +114,13 @@
     font-size: 0.95rem;
     color: var(--ink);
   }
-  dl { margin: 0; }
-  dt {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    margin-top: 14px;
+  ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    font-size: 0.95rem;
   }
-  dt:first-child { margin-top: 0; }
-  dd {
-    margin: 4px 0 0;
-    font-size: 0.98rem;
-  }
+  li { margin-bottom: 8px; }
+  li b { color: var(--ink); }
   a { color: var(--accent); }
   .panel {
     background: var(--panel);
@@ -159,27 +155,31 @@
     <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
   </div>
   <div class="panel">
-    <h1>運営者情報</h1>
+    <h1>使い方</h1>
+    <p>「これは何色？」は、表示された正方形の色を当てるだけのシンプルなクイズゲームです。会員登録は不要で、すべてブラウザ内で完結します。</p>
 
-    <h2>運営者</h2>
-    <dl>
-      <dt>運営者名</dt>
-      <dd>ふぉんD</dd>
-      <dt>連絡先</dt>
-      <dd><a href="contact.html">お問い合わせページ</a>よりご連絡ください</dd>
-    </dl>
+    <h2>基本の遊び方</h2>
+    <p>トップ画面でレベルを選ぶと出題がスタートします。表示された色の正解を、選択肢の中からタップ／クリックして選んでください。全問答え終わると結果画面が表示され、正解率に応じたメッセージと効果音が流れます。</p>
 
-    <h2>サイトについて</h2>
-    <p>「これは何色？」は、正方形に塗られた色の名前やカラーコードを当てて遊ぶ、無料のミニゲームサイトです。</p>
-    <p>会員登録やインストールは不要で、すべての機能はブラウザ内の処理のみで完結します。入力や選択の内容がサーバーに送信されることはなく、自己ベストの記録もお使いのブラウザ内にのみ保存されます。</p>
-    <p>QAエンジニアとしての実務経験をもとに、正確な動作を心がけて開発・運営しています。</p>
+    <h2>レベル一覧</h2>
+    <ul>
+      <li><b>初級</b>：定番の色を当てる、全10問。</li>
+      <li><b>中級</b>：ちょっと渋い色にも挑戦、全7問。</li>
+      <li><b>上級</b>：和色の微妙な違いを見極める、全5問（日本語のみの出題です）。</li>
+      <li><b>激ムズ</b>：似ている4つのカラーコードから正解を選ぶ、全5問。「ヒントを見る」ボタンでR/G/Bそれぞれの明るさの目安を確認できます。</li>
+      <li><b>この色も256色あんの？</b>：ほぼ同じに見える4色から、お題と全く同じ色を見分ける、全5問。</li>
+    </ul>
 
-    <h2>掲載情報について</h2>
-    <p>当サイトに掲載している色の名称・カラーコード・解説等については、できる限り正確な情報を提供するよう努めていますが、内容の正確性・完全性を保証するものではありません。</p>
-    <p>重要な用途でご利用の際は、必ずご自身でのご確認をお願いいたします。</p>
+    <h2>結果とスコア</h2>
+    <p>各レベルの自己ベスト（初回正解数）は、お使いのブラウザに自動で保存され、次回プレイ時にも表示されます。結果画面の共有ボタンから、スコアをSNSでシェアすることもできます。</p>
 
-    <h2>広告について</h2>
-    <p>当サイトは、Google AdSenseなど第三者配信の広告サービスを利用する場合があります。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+    <h2>便利な機能（画面右上）</h2>
+    <ul>
+      <li><b>🌙／☀️ アイコン</b>：ダークモードとライトモードを切り替えられます。</li>
+      <li><b>🔊／🔇 アイコン</b>：効果音のオン・オフを切り替えられます。</li>
+      <li><b>EN／日本語 ボタン</b>：表示言語を切り替えられます（上級レベルの和色名は日本語のみです）。</li>
+    </ul>
+    <p>設定はすべてお使いのブラウザに保存され、次回アクセス時も引き継がれます。</p>
   </div>
   <div class="site-footer">
     <a href="usage.html">使い方</a>

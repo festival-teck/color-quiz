@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>運営者情報 | これは何色？</title>
+<title>お問い合わせ | これは何色？</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
 <script>
@@ -31,6 +31,7 @@
     --panel: #ffffff;
     --line: #e4e1d9;
     --accent: #2b3a67;
+    --accent-ink: #ffffff;
     box-sizing: border-box;
   }
   :root:not([data-theme="light"]) {
@@ -41,6 +42,7 @@
       --panel: #201f23;
       --line: #34333a;
       --accent: #7c8fd6;
+      --accent-ink: #14141c;
     }
   }
   :root[data-theme="dark"] {
@@ -50,6 +52,7 @@
     --panel: #201f23;
     --line: #34333a;
     --accent: #7c8fd6;
+    --accent-ink: #14141c;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -101,36 +104,34 @@
     font-weight: 900;
     margin: 0 0 20px;
   }
-  h2 {
-    font-size: 1.08rem;
-    font-weight: 700;
-    margin: 28px 0 10px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
   p {
     margin: 0 0 14px;
     font-size: 0.95rem;
     color: var(--ink);
-  }
-  dl { margin: 0; }
-  dt {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    margin-top: 14px;
-  }
-  dt:first-child { margin-top: 0; }
-  dd {
-    margin: 4px 0 0;
-    font-size: 0.98rem;
   }
   a { color: var(--accent); }
   .panel {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 24px 24px 8px;
+    padding: 24px 24px 28px;
+    text-align: center;
+  }
+  .form-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 14px 32px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.98rem;
+  }
+  .note {
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
   }
   .site-footer {
     width: 100%;
@@ -159,27 +160,11 @@
     <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
   </div>
   <div class="panel">
-    <h1>運営者情報</h1>
-
-    <h2>運営者</h2>
-    <dl>
-      <dt>運営者名</dt>
-      <dd>ふぉんD</dd>
-      <dt>連絡先</dt>
-      <dd><a href="contact.html">お問い合わせページ</a>よりご連絡ください</dd>
-    </dl>
-
-    <h2>サイトについて</h2>
-    <p>「これは何色？」は、正方形に塗られた色の名前やカラーコードを当てて遊ぶ、無料のミニゲームサイトです。</p>
-    <p>会員登録やインストールは不要で、すべての機能はブラウザ内の処理のみで完結します。入力や選択の内容がサーバーに送信されることはなく、自己ベストの記録もお使いのブラウザ内にのみ保存されます。</p>
-    <p>QAエンジニアとしての実務経験をもとに、正確な動作を心がけて開発・運営しています。</p>
-
-    <h2>掲載情報について</h2>
-    <p>当サイトに掲載している色の名称・カラーコード・解説等については、できる限り正確な情報を提供するよう努めていますが、内容の正確性・完全性を保証するものではありません。</p>
-    <p>重要な用途でご利用の際は、必ずご自身でのご確認をお願いいたします。</p>
-
-    <h2>広告について</h2>
-    <p>当サイトは、Google AdSenseなど第三者配信の広告サービスを利用する場合があります。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+    <h1>お問い合わせ</h1>
+    <p>「これは何色？」に関するご意見・ご要望・不具合報告はこちらから承っております。</p>
+    <p>下記フォームより、ゲームに関するご意見・ご要望・不具合のご報告などをお送りください。</p>
+    <a class="form-btn" href="https://docs.google.com/forms/d/1ul9e318yHhixHOjYTOZlA2eYhhNiN5sS4JxnIKr2HPA/viewform" target="_blank" rel="noopener">お問い合わせフォームを開く</a>
+    <p class="note">内容によってはお返事できない場合がございますので、あらかじめご了承ください。</p>
   </div>
   <div class="site-footer">
     <a href="usage.html">使い方</a>

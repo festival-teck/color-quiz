@@ -12,6 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-7LV1VCP5BG');
 </script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -25,8 +33,8 @@
     --accent: #2b3a67;
     box-sizing: border-box;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
       --ink: #f1efe9;
       --ink-soft: #b9b6ad;
       --paper: #17171a;
@@ -34,6 +42,14 @@
       --line: #34333a;
       --accent: #7c8fd6;
     }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -48,16 +64,38 @@
   .wrap {
     max-width: 640px;
     margin: 0 auto;
+    position: relative;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
   }
   .back-link {
     display: inline-block;
-    margin-bottom: 24px;
     color: var(--accent);
     text-decoration: none;
     font-weight: 700;
     font-size: 0.92rem;
   }
   .back-link:hover { text-decoration: underline; }
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
   h1 {
     font-size: 1.5rem;
     font-weight: 900;
@@ -95,11 +133,32 @@
     border-radius: 16px;
     padding: 24px 24px 8px;
   }
+  .site-footer {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <a class="back-link" href="index.html">← トップへ戻る</a>
+  <div class="topbar">
+    <a class="back-link" href="index.html">← トップへ戻る</a>
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+  </div>
   <div class="panel">
     <h1>プライバシーポリシー</h1>
     <p class="updated">制定日：2026年9月24日</p>
@@ -131,8 +190,44 @@
     <p>当サイトは、法令の変更や運営方針の見直しに伴い、本ポリシーの内容を予告なく変更することがあります。変更後のプライバシーポリシーは、当ページに掲載した時点から効力を生じるものとします。</p>
 
     <h2>お問い合わせ</h2>
-    <p>本ポリシーに関するお問い合わせは、<a href="about.html">運営者情報ページ</a>に記載の連絡先までお願いいたします。</p>
+    <p>本ポリシーに関するお問い合わせは、<a href="contact.html">お問い合わせページ</a>よりご連絡ください。</p>
+  </div>
+  <div class="site-footer">
+    <a href="usage.html">使い方</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="faq.html">よくある質問</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="about.html">運営者情報</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="contact.html">お問い合わせ</a>
   </div>
 </div>
+<script>
+  (function () {
+    function getEffectiveTheme() {
+      var stored = null;
+      try { stored = localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+      if (stored === "light" || stored === "dark") return stored;
+      return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    var btn = document.getElementById("theme-toggle");
+    function updateIcon(theme) {
+      btn.textContent = theme === "dark" ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateIcon(current);
+    btn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+      updateIcon(next);
+    });
+  })();
+</script>
 </body>
 </html>
