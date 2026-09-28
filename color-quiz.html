@@ -79,7 +79,7 @@
     color: var(--ink);
     font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
     -webkit-font-smoothing: antialiased;
-    padding-top: env(safe-area-inset-top, 0px);
+    padding-top: min(env(safe-area-inset-top, 0px), 48px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     overflow-x: hidden;
   }
@@ -136,12 +136,15 @@
 
   .title-controls {
     position: absolute;
-    top: calc(env(safe-area-inset-top, 0px) + 16px);
+    top: 16px;
     right: 16px;
     z-index: 2;
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: calc(100% - 32px);
   }
 
   .lang-toggle {
