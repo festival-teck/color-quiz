@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://colorquiz.labfond.com/contact.html">
+<script>
+  if (location.hostname.endsWith("github.io")) {
+    var path = location.pathname.replace(/^\/color-quiz/, "");
+    location.replace("https://colorquiz.labfond.com" + path + location.search + location.hash);
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>お問い合わせ | これは何色？</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7LV1VCP5BG');
+</script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201f1d;
+    --ink-soft: #514f49;
+    --paper: #faf9f6;
+    --panel: #ffffff;
+    --line: #e4e1d9;
+    --accent: #2b3a67;
+    --accent-ink: #ffffff;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #f1efe9;
+      --ink-soft: #b9b6ad;
+      --paper: #17171a;
+      --panel: #201f23;
+      --line: #34333a;
+      --accent: #7c8fd6;
+      --accent-ink: #14141c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
+    --accent-ink: #14141c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.8;
+    padding: 32px 20px 64px;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0 0 20px;
+  }
+  p {
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  a { color: var(--accent); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 28px;
+    text-align: center;
+  }
+  .form-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 14px 32px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.98rem;
+  }
+  .note {
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .site-footer {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← トップへ戻る</a>
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+  </div>
+  <div class="panel">
+    <h1>お問い合わせ</h1>
+    <p>「これは何色？」に関するご意見・ご要望・不具合報告はこちらから承っております。</p>
+    <p>下記フォームより、ゲームに関するご意見・ご要望・不具合のご報告などをお送りください。</p>
+    <a class="form-btn" href="https://docs.google.com/forms/d/1ul9e318yHhixHOjYTOZlA2eYhhNiN5sS4JxnIKr2HPA/viewform" target="_blank" rel="noopener">お問い合わせフォームを開く</a>
+    <p class="note">内容によってはお返事できない場合がございますので、あらかじめご了承ください。</p>
+  </div>
+  <div class="site-footer">
+    <a href="usage.html">使い方</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="faq.html">よくある質問</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="about.html">運営者情報</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+</div>
+<script>
+  (function () {
+    function getEffectiveTheme() {
+      var stored = null;
+      try { stored = localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+      if (stored === "light" || stored === "dark") return stored;
+      return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    var btn = document.getElementById("theme-toggle");
+    function updateIcon(theme) {
+      btn.textContent = theme === "dark" ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateIcon(current);
+    btn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+      updateIcon(next);
+    });
+  })();
+</script>
+</body>
+</html>
