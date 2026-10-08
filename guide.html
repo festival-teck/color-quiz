@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<link rel="canonical" href="https://colorquiz.labfond.com/about.html">
+<link rel="canonical" href="https://colorquiz.labfond.com/guide.html">
 <script>
   if (location.hostname.endsWith("github.io")) {
     var path = location.pathname.replace(/^\/color-quiz/, "");
@@ -10,7 +10,8 @@
   }
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>運営者情報 | これは何色？</title>
+<title>色の読みもの | これは何色？</title>
+<meta name="description" content="和色の図鑑、カラーコードの読み方、間違えやすい色名の違いなど、色にまつわる解説ページの一覧です。">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
 <script>
@@ -121,17 +122,13 @@
     font-size: 0.95rem;
     color: var(--ink);
   }
-  dl { margin: 0; }
-  dt {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    margin-top: 14px;
+  ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    font-size: 0.95rem;
   }
-  dt:first-child { margin-top: 0; }
-  dd {
-    margin: 4px 0 0;
-    font-size: 0.98rem;
-  }
+  li { margin-bottom: 8px; }
+  li b { color: var(--ink); }
   a { color: var(--accent); }
   .panel {
     background: var(--panel);
@@ -157,36 +154,49 @@
   }
   .site-footer a:hover { color: var(--ink); }
   .footer-sep { margin: 0 6px; }
+
+  .lead { color: var(--ink-soft); font-size: 0.9rem; margin-top: -8px; }
+  .note { font-size: 0.82rem !important; color: var(--ink-soft) !important; background: var(--paper); border-radius: 10px; padding: 10px 14px; }
+  code, .hex { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; }
+  .sw-grid { display: grid; gap: 12px; margin: 0 0 18px; }
+  .sw { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .chip { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--line); }
+  .chip.sm { width: 40px; height: 40px; border-radius: 8px; }
+  .sw-body { min-width: 0; }
+  .sw-name { font-weight: 700; font-size: 1rem; }
+  .sw-name small { font-weight: 500; color: var(--ink-soft); font-size: 0.78rem; margin-left: 6px; }
+  .sw-desc { font-size: 0.88rem !important; margin: 4px 0 0 !important; line-height: 1.75; }
+  .tbl-wrap { overflow-x: auto; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: middle; }
+  th { color: var(--ink-soft); font-weight: 700; font-size: 0.8rem; }
+  td .chip { display: inline-block; vertical-align: middle; }
+  .row-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
+  .row-chips .sw { padding: 8px 10px; align-items: center; gap: 10px; }
+  .card-list { list-style: none; padding: 0; }
+  .card-list li { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-list a { font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .card-list a:hover { text-decoration: underline; }
+  .card-list p { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
+  .cta { display: inline-block; margin: 4px 0 18px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+  .related { font-size: 0.88rem; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
-    <a class="back-link" href="index.html">← トップへ戻る</a>
+    <a class="back-link" href="index.html">← クイズのトップへ</a>
     <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
   </div>
   <div class="panel">
-    <h1>運営者情報</h1>
-
-    <h2>運営者</h2>
-    <dl>
-      <dt>運営者名</dt>
-      <dd>FD</dd>
-      <dt>連絡先</dt>
-      <dd><a href="contact.html">お問い合わせページ</a>よりご連絡ください</dd>
-    </dl>
-
-    <h2>サイトについて</h2>
-    <p>「これは何色？」は、正方形に塗られた色の名前やカラーコードを当てて遊ぶ、無料のミニゲームサイトです。</p>
-    <p>会員登録やインストールは不要で、すべての機能はブラウザ内の処理のみで完結します。入力や選択の内容がサーバーに送信されることはなく、自己ベストの記録もお使いのブラウザ内にのみ保存されます。</p>
-    <p>QAエンジニアとしての実務経験をもとに、正確な動作を心がけて開発・運営しています。</p>
-
-    <h2>掲載情報について</h2>
-    <p>当サイトに掲載している色の名称・カラーコード・解説等については、できる限り正確な情報を提供するよう努めていますが、内容の正確性・完全性を保証するものではありません。</p>
-    <p>重要な用途でご利用の際は、必ずご自身でのご確認をお願いいたします。</p>
-
-    <h2>広告について</h2>
-    <p>当サイトは、Google AdSenseなど第三者配信の広告サービスを利用する場合があります。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+    <h1>色の読みもの</h1>
+    <p class="lead">クイズがもっと楽しくなる、色にまつわる解説ページです。</p>
+    <ul class="card-list">
+      <li><a href="wairo.html">和色（日本の伝統色）図鑑</a><p>上級に登場する和色27色を、色見本・読み方・由来とともに紹介します。</p></li>
+      <li><a href="hex-color-code.html">カラーコード（HEX）の読み方</a><p>「#1E50A2」のようなコードから色を読み取るコツ。激ムズレベルの攻略にも。</p></li>
+      <li><a href="confusing-colors.html">間違えやすい色名の違い</a><p>紅と朱、紺と藍、空色と水色、カーキの本当の色など、似ている色を比べます。</p></li>
+    </ul>
+    <a class="cta" href="index.html">クイズに挑戦する →</a>
   </div>
   <div class="site-footer">
     <a href="usage.html">使い方</a>

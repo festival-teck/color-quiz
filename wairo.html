@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://colorquiz.labfond.com/wairo.html">
+<script>
+  if (location.hostname.endsWith("github.io")) {
+    var path = location.pathname.replace(/^\/color-quiz/, "");
+    location.replace("https://colorquiz.labfond.com" + path + location.search + location.hash);
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>和色（日本の伝統色）図鑑｜読み方と由来 | これは何色？</title>
+<meta name="description" content="紅・朱色・浅葱色・瑠璃色・萌黄色など、日本の伝統色（和色）27色を色見本・カラーコード・読み方・由来とともに紹介します。">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7LV1VCP5BG');
+</script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201f1d;
+    --ink-soft: #514f49;
+    --paper: #faf9f6;
+    --panel: #ffffff;
+    --line: #e4e1d9;
+    --accent: #2b3a67;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #f1efe9;
+      --ink-soft: #b9b6ad;
+      --paper: #17171a;
+      --panel: #201f23;
+      --line: #34333a;
+      --accent: #7c8fd6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.8;
+    padding: 32px 20px 64px;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0 0 20px;
+  }
+  h2 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  p {
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    font-size: 0.95rem;
+  }
+  li { margin-bottom: 8px; }
+  li b { color: var(--ink); }
+  a { color: var(--accent); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 8px;
+  }
+  .site-footer {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+
+  .lead { color: var(--ink-soft); font-size: 0.9rem; margin-top: -8px; }
+  .note { font-size: 0.82rem !important; color: var(--ink-soft) !important; background: var(--paper); border-radius: 10px; padding: 10px 14px; }
+  code, .hex { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; }
+  .sw-grid { display: grid; gap: 12px; margin: 0 0 18px; }
+  .sw { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .chip { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--line); }
+  .chip.sm { width: 40px; height: 40px; border-radius: 8px; }
+  .sw-body { min-width: 0; }
+  .sw-name { font-weight: 700; font-size: 1rem; }
+  .sw-name small { font-weight: 500; color: var(--ink-soft); font-size: 0.78rem; margin-left: 6px; }
+  .sw-desc { font-size: 0.88rem !important; margin: 4px 0 0 !important; line-height: 1.75; }
+  .tbl-wrap { overflow-x: auto; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: middle; }
+  th { color: var(--ink-soft); font-weight: 700; font-size: 0.8rem; }
+  td .chip { display: inline-block; vertical-align: middle; }
+  .row-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
+  .row-chips .sw { padding: 8px 10px; align-items: center; gap: 10px; }
+  .card-list { list-style: none; padding: 0; }
+  .card-list li { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-list a { font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .card-list a:hover { text-decoration: underline; }
+  .card-list p { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
+  .cta { display: inline-block; margin: 4px 0 18px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+  .related { font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← クイズのトップへ</a>
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+  </div>
+  <div class="panel">
+    <h1>和色（日本の伝統色）図鑑</h1>
+    <p class="lead">クイズ「上級」に登場する和色27色を、色見本・読み方・由来とともに紹介します。</p>
+    <p>和色（わしょく）とは、日本で古くから使われてきた伝統的な色の名前のことです。植物や鳥、染料・顔料の原料、さらには時代や人物に由来する名前が多く、同じ「赤」や「緑」でも、ほんの少しの違いにそれぞれ名前が付けられてきました。</p>
+    <p class="note">※伝統色には決まった一つの色があるわけではなく、色見本帳や資料によって色味（カラーコード）が異なります。このページのカラーコードは、当クイズで出題している代表的な値です。</p>
+    <a class="cta" href="index.html">上級レベルで腕試しする →</a>
+    <h2>赤・桃系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#D0104C" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">紅<small>くれない</small> <small class="hex">#D0104C</small></div><p class="sw-desc">紅花（べにばな）から採れる染料の色。江戸時代には「紅一匁（もんめ）、金一匁」と言われるほど貴重だったとされ、「口紅」の語源にもなっています。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#EB6238" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">朱色<small>しゅいろ</small> <small class="hex">#EB6238</small></div><p class="sw-desc">硫化水銀を主成分とする鉱物「辰砂（しんしゃ）」から作られる顔料「朱」に由来します。神社の鳥居や社殿に使われ、魔除けの意味を持つとされてきました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#D9333F" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">緋色<small>ひいろ</small> <small class="hex">#D9333F</small></div><p class="sw-desc">燃えるような鮮やかな赤。武将の陣羽織などに好んで使われ、「緋鯉（ひごい）」の名前にも残っています。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#B7282E" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">茜色<small>あかねいろ</small> <small class="hex">#B7282E</small></div><p class="sw-desc">アカネという植物の根から採れる染料の色。「茜色の空」という表現の通り、今も夕焼けを形容する言葉として使われます。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#E2540A" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">丹色<small>にいろ</small> <small class="hex">#E2540A</small></div><p class="sw-desc">顔料「丹（に）」に由来する、朱色よりやや黄みがかった赤。古くから建築や工芸の彩色に使われてきました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#A13D2C" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">弁柄色<small>べんがらいろ</small> <small class="hex">#A13D2C</small></div><p class="sw-desc">酸化鉄を主成分とする顔料「弁柄（べんがら）」の赤茶色。名前はインドのベンガル地方に由来するとされ、京都の町家の格子などにも使われています。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#7C1C22" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">深緋<small>こきひ</small> <small class="hex">#7C1C22</small></div><p class="sw-desc">「深い緋色」を意味する濃い赤。奈良時代の養老律令（衣服令）では、四位の官人が着る朝服の色と定められていました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#FEEEED" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">桜色<small>さくらいろ</small> <small class="hex">#FEEEED</small></div><p class="sw-desc">満開の桜の花びらのような、ごく淡いピンク。「ピンク」より白に近く、儚さや上品さを表す色として着物や和菓子に使われます。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#F1B2A4" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">鴇色<small>ときいろ</small> <small class="hex">#F1B2A4</small></div><p class="sw-desc">鳥のトキの風切羽のような、淡く優しいピンク。かつて全国に生息したトキの姿が、色の名前として今も残っています。</p></div></div>
+    </div>
+    <h2>黄・黄緑系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#F8B500" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">山吹色<small>やまぶきいろ</small> <small class="hex">#F8B500</small></div><p class="sw-desc">ヤマブキの花に由来する、赤みがかった鮮やかな黄色。小判の色にたとえられ、時代劇の「山吹色のお菓子」は賄賂の隠語として知られます。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#D6D69E" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">承和色<small>そがいろ</small> <small class="hex">#D6D69E</small></div><p class="sw-desc">菊の花を愛した仁明天皇にちなみ、在位中の元号「承和（じょうわ）」から名付けられたとされる、菊のような淡い黄色。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#D7CF3A" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">鶸色<small>ひわいろ</small> <small class="hex">#D7CF3A</small></div><p class="sw-desc">鶸（ひわ）という小鳥の羽のような、明るい黄緑。江戸時代に着物の色として親しまれました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#AACF53" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">萌黄色<small>もえぎいろ</small> <small class="hex">#AACF53</small></div><p class="sw-desc">春に萌え出る若葉の色。鎧の縅糸（おどしいと）の色としても好まれた、生命力を感じさせる黄緑です。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#A8CB3B" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">若草色<small>わかくさいろ</small> <small class="hex">#A8CB3B</small></div><p class="sw-desc">春に芽吹いたばかりの若い草の色。萌黄色とよく似た、瑞々しい黄緑です。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#6B6C23" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">鶯色<small>うぐいすいろ</small> <small class="hex">#6B6C23</small></div><p class="sw-desc">ウグイスの羽のような、くすんだ黄緑がかった茶色。「うぐいす色」と聞いて明るい黄緑を思い浮かべる人も多いですが、それはメジロの色に近いと言われます。</p></div></div>
+    </div>
+    <h2>緑系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#1B7340" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">常磐色<small>ときわいろ</small> <small class="hex">#1B7340</small></div><p class="sw-desc">松や杉など、一年中葉の色が変わらない常緑樹の深い緑。「常磐」は永遠不変を意味し、長寿や繁栄を祝う色とされてきました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#1F4B3F" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">千歳緑<small>ちとせみどり</small> <small class="hex">#1F4B3F</small></div><p class="sw-desc">千年たっても変わらないとされる松の葉のような深い緑。常磐色と同じく、おめでたい色として好まれてきました。</p></div></div>
+    </div>
+    <h2>青系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#00A3AF" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">浅葱色<small>あさぎいろ</small> <small class="hex">#00A3AF</small></div><p class="sw-desc">「浅い（薄い）葱の葉の色」という意味を持つ、緑がかった明るい青。新選組の羽織の色として知られています。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#1E50A2" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">瑠璃色<small>るりいろ</small> <small class="hex">#1E50A2</small></div><p class="sw-desc">仏教の七宝のひとつ「瑠璃」、すなわちラピスラズリのような紫みを帯びた深い青。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#4C6CB3" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">群青色<small>ぐんじょういろ</small> <small class="hex">#4C6CB3</small></div><p class="sw-desc">「青が群れる」と書く、鮮やかな青。藍銅鉱（らんどうこう）などの鉱物から作る岩絵具として、日本画で古くから使われてきました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#A8D8D8" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">秘色<small>ひそく</small> <small class="hex">#A8D8D8</small></div><p class="sw-desc">中国・越州窯の青磁の色に由来する、淡い青緑。宮廷への献上品として一般の使用が禁じられたことから「秘色」と呼ばれたと伝えられます。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#1A2744" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">鉄紺<small>てつこん</small> <small class="hex">#1A2744</small></div><p class="sw-desc">鉄のような重厚感を帯びた、黒に近い紺色。引き締まった印象から、現代でもスーツや制服に使われる色です。</p></div></div>
+    </div>
+    <h2>紫系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#6A3D9A" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">江戸紫<small>えどむらさき</small> <small class="hex">#6A3D9A</small></div><p class="sw-desc">江戸で好まれた、青みの強い紫。赤みのある「京紫」と対比され、粋な色とされてきました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#5654A2" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">桔梗色<small>ききょういろ</small> <small class="hex">#5654A2</small></div><p class="sw-desc">秋の七草のひとつ、桔梗の花のような青紫。明智光秀の家紋「桔梗紋」でも知られる花です。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#B19CD9" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">藤色<small>ふじいろ</small> <small class="hex">#B19CD9</small></div><p class="sw-desc">藤の花房のような、上品で淡い紫。平安時代から貴族に愛されてきた色です。</p></div></div>
+    </div>
+    <h2>鼠（灰）系</h2>
+    <div class="sw-grid">
+      <div class="sw"><span class="chip" style="background:#9C9B94" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">銀鼠<small>ぎんねず</small> <small class="hex">#9C9B94</small></div><p class="sw-desc">銀色を帯びた、明るく上品な鼠色。江戸時代には「四十八茶百鼠（しじゅうはっちゃひゃくねずみ）」と呼ばれるほど、茶色や鼠色の微妙な違いを楽しむ文化がありました。</p></div></div>
+      <div class="sw"><span class="chip" style="background:#7F8471" aria-hidden="true"></span><div class="sw-body"><div class="sw-name">利休鼠<small>りきゅうねずみ</small> <small class="hex">#7F8471</small></div><p class="sw-desc">茶人・千利休の名を冠した、緑みを帯びた鼠色。利休本人が好んだ色というより、侘び茶のイメージから後世に名付けられたとされます。</p></div></div>
+    </div>
+    <h2>和色の名前の付け方</h2>
+    <p>和色の名前は、大きく分けると次のようなものから付けられています。由来を知っておくと、初めて見る色名でもおおよその色味が想像しやすくなります。</p>
+    <ul><li><b>植物</b>：桜色、山吹色、萌黄色、藤色、桔梗色 など</li><li><b>鳥</b>：鴇色、鶸色、鶯色 など</li><li><b>染料・顔料の原料</b>：紅、茜色、朱色、丹色、弁柄色、群青色 など</li><li><b>時代や人物</b>：承和色（平安時代の元号）、利休鼠（千利休）、江戸紫 など</li></ul>
+
+    <h2>あわせて読みたい</h2>
+    <ul class="related"><li><a href="guide.html">色の読みもの 一覧</a></li><li><a href="hex-color-code.html">カラーコード（HEX）の読み方</a></li><li><a href="confusing-colors.html">間違えやすい色名の違い</a></li></ul>
+  </div>
+  <div class="site-footer">
+    <a href="usage.html">使い方</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="guide.html">色の読みもの</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="faq.html">よくある質問</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="about.html">運営者情報</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+</div>
+<script>
+  (function () {
+    function getEffectiveTheme() {
+      var stored = null;
+      try { stored = localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+      if (stored === "light" || stored === "dark") return stored;
+      return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    var btn = document.getElementById("theme-toggle");
+    function updateIcon(theme) {
+      btn.textContent = theme === "dark" ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateIcon(current);
+    btn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+      updateIcon(next);
+    });
+  })();
+</script>
+</body>
+</html>

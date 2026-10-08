@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://colorquiz.labfond.com/hex-color-code.html">
+<script>
+  if (location.hostname.endsWith("github.io")) {
+    var path = location.pathname.replace(/^\/color-quiz/, "");
+    location.replace("https://colorquiz.labfond.com" + path + location.search + location.hash);
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>カラーコード（HEX）の読み方｜16進数から色を読み取るコツ | これは何色？</title>
+<meta name="description" content="#RRGGBB形式のカラーコードの仕組み、16進数の数え方、コードからおおよその色を読み取る3つのコツを、例とともにわかりやすく解説します。">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7LV1VCP5BG');
+</script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201f1d;
+    --ink-soft: #514f49;
+    --paper: #faf9f6;
+    --panel: #ffffff;
+    --line: #e4e1d9;
+    --accent: #2b3a67;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #f1efe9;
+      --ink-soft: #b9b6ad;
+      --paper: #17171a;
+      --panel: #201f23;
+      --line: #34333a;
+      --accent: #7c8fd6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.8;
+    padding: 32px 20px 64px;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0 0 20px;
+  }
+  h2 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  p {
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    font-size: 0.95rem;
+  }
+  li { margin-bottom: 8px; }
+  li b { color: var(--ink); }
+  a { color: var(--accent); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 8px;
+  }
+  .site-footer {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+
+  .lead { color: var(--ink-soft); font-size: 0.9rem; margin-top: -8px; }
+  .note { font-size: 0.82rem !important; color: var(--ink-soft) !important; background: var(--paper); border-radius: 10px; padding: 10px 14px; }
+  code, .hex { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; }
+  .sw-grid { display: grid; gap: 12px; margin: 0 0 18px; }
+  .sw { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .chip { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--line); }
+  .chip.sm { width: 40px; height: 40px; border-radius: 8px; }
+  .sw-body { min-width: 0; }
+  .sw-name { font-weight: 700; font-size: 1rem; }
+  .sw-name small { font-weight: 500; color: var(--ink-soft); font-size: 0.78rem; margin-left: 6px; }
+  .sw-desc { font-size: 0.88rem !important; margin: 4px 0 0 !important; line-height: 1.75; }
+  .tbl-wrap { overflow-x: auto; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: middle; }
+  th { color: var(--ink-soft); font-weight: 700; font-size: 0.8rem; }
+  td .chip { display: inline-block; vertical-align: middle; }
+  .row-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
+  .row-chips .sw { padding: 8px 10px; align-items: center; gap: 10px; }
+  .card-list { list-style: none; padding: 0; }
+  .card-list li { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-list a { font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .card-list a:hover { text-decoration: underline; }
+  .card-list p { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
+  .cta { display: inline-block; margin: 4px 0 18px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+  .related { font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← クイズのトップへ</a>
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+  </div>
+  <div class="panel">
+    <h1>カラーコード（HEX）の読み方</h1>
+    <p class="lead">「#1E50A2」のような6桁のコードから、どんな色なのかを読み取るコツを解説します。</p>
+    <h2>カラーコードは「赤・緑・青」の量</h2>
+    <p>ウェブで使われる <code>#RRGGBB</code> 形式のカラーコード（HEXコード）は、<b>R（赤）・G（緑）・B（青）</b>の3つの光の強さを、それぞれ2桁ずつ並べたものです。たとえば <code>#1E50A2</code> なら、Rが <code>1E</code>、Gが <code>50</code>、Bが <code>A2</code> です。</p>
+    <p>各2桁は <code>00</code>（いちばん暗い）から <code>FF</code>（いちばん明るい）までの256段階で表されます。3色それぞれ256段階なので、表せる色は 256 × 256 × 256 = <b>16,777,216色</b>になります。</p>
+    <h2>16進数の数え方</h2>
+    <p>カラーコードは16進数で書かれています。0〜9のあとに、A=10、B=11、C=12、D=13、E=14、F=15 と続きます。2桁の値は「左の桁 × 16 ＋ 右の桁」で10進数に直せます。</p>
+    <div class="tbl-wrap"><table><thead><tr><th>16進数</th><th>計算</th><th>10進数</th></tr></thead><tbody>
+    <tr><td class="hex">00</td><td>0×16 + 0</td><td>0</td></tr>
+    <tr><td class="hex">80</td><td>8×16 + 0</td><td>128（ちょうど中間）</td></tr>
+    <tr><td class="hex">A3</td><td>10×16 + 3</td><td>163</td></tr>
+    <tr><td class="hex">C8</td><td>12×16 + 8</td><td>200</td></tr>
+    <tr><td class="hex">FF</td><td>15×16 + 15</td><td>255（最大）</td></tr>
+    </tbody></table></div>
+    <p>細かく計算しなくても、<b>左の桁だけ見ればおおよその明るさが分かります</b>。左の桁が 0〜3 なら暗め、8 前後なら中くらい、C〜F なら明るめです。</p>
+    <h2>基本の色のコード</h2>
+    <p>光の三原色は、混ぜるほど明るくなります。3色すべて最大なら白、すべて0なら黒です。</p>
+    <div class="tbl-wrap"><table><thead><tr><th></th><th>コード</th><th>色</th><th>R / G / B</th><th>ポイント</th></tr></thead><tbody>
+<tr><td><span class="chip sm" style="background:#FF0000" aria-hidden="true"></span></td><td class="hex">#FF0000</td><td>赤</td><td>255 / 0 / 0</td><td>Rだけ最大</td></tr>
+<tr><td><span class="chip sm" style="background:#00FF00" aria-hidden="true"></span></td><td class="hex">#00FF00</td><td>緑</td><td>0 / 255 / 0</td><td>Gだけ最大</td></tr>
+<tr><td><span class="chip sm" style="background:#0000FF" aria-hidden="true"></span></td><td class="hex">#0000FF</td><td>青</td><td>0 / 0 / 255</td><td>Bだけ最大</td></tr>
+<tr><td><span class="chip sm" style="background:#FFFF00" aria-hidden="true"></span></td><td class="hex">#FFFF00</td><td>黄</td><td>255 / 255 / 0</td><td>赤＋緑</td></tr>
+<tr><td><span class="chip sm" style="background:#00FFFF" aria-hidden="true"></span></td><td class="hex">#00FFFF</td><td>シアン</td><td>0 / 255 / 255</td><td>緑＋青</td></tr>
+<tr><td><span class="chip sm" style="background:#FF00FF" aria-hidden="true"></span></td><td class="hex">#FF00FF</td><td>マゼンタ</td><td>255 / 0 / 255</td><td>赤＋青</td></tr>
+<tr><td><span class="chip sm" style="background:#FFFFFF" aria-hidden="true"></span></td><td class="hex">#FFFFFF</td><td>白</td><td>255 / 255 / 255</td><td>すべて最大</td></tr>
+<tr><td><span class="chip sm" style="background:#808080" aria-hidden="true"></span></td><td class="hex">#808080</td><td>灰色</td><td>128 / 128 / 128</td><td>3つが同じ値なら灰色</td></tr>
+<tr><td><span class="chip sm" style="background:#000000" aria-hidden="true"></span></td><td class="hex">#000000</td><td>黒</td><td>0 / 0 / 0</td><td>すべて0</td></tr>
+    </tbody></table></div>
+    <h2>コードから色を読み取る3つのコツ</h2>
+    <ul>
+      <li><b>いちばん大きい値が色の方向を決める</b>：Rが大きければ赤寄り、Bが大きければ青寄り。2つが同じくらい大きければ、その中間（R＋Gなら黄、G＋Bなら青緑、R＋Bなら紫〜ピンク）になります。</li>
+      <li><b>全体の大きさが明るさを決める</b>：3つとも大きければ明るい色、3つとも小さければ暗い色です。</li>
+      <li><b>最大と最小の差が鮮やかさを決める</b>：差が大きいほど鮮やかで、差が小さいほど灰色に近い、くすんだ色になります。</li>
+    </ul>
+    <h2>実際に読んでみよう</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#00A3AF" aria-hidden="true"></span><div><b>浅葱色</b> <span class="hex">#00A3AF</span></div></div></div>
+    <p>R=<code>00</code>（0）、G=<code>A3</code>（163）、B=<code>AF</code>（175）。赤がまったくなく、緑と青が同じくらい強いので<b>青緑</b>。どちらも中〜明るめなので、明るく澄んだ青緑になります。</p>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#1A237E" aria-hidden="true"></span><div><b>紺色</b> <span class="hex">#1A237E</span></div></div></div>
+    <p>R=<code>1A</code>（26）、G=<code>23</code>（35）、B=<code>7E</code>（126）。青が飛び抜けて大きいので<b>青</b>。ただし最大の青でも126と中くらいなので、<b>暗い青</b>＝紺色になります。</p>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#9C9B94" aria-hidden="true"></span><div><b>銀鼠</b> <span class="hex">#9C9B94</span></div></div></div>
+    <p>R=<code>9C</code>（156）、G=<code>9B</code>（155）、B=<code>94</code>（148）。3つの値がほぼ同じなので<b>灰色</b>。わずかに青が小さい分、ほんの少し黄みのある灰色になります。</p>
+    <h2>知っておくと便利なこと</h2>
+    <ul>
+      <li><b>大文字・小文字は同じ</b>：<code>#1e50a2</code> と <code>#1E50A2</code> は同じ色です。</li>
+      <li><b>3桁の省略形</b>：<code>#F0A</code> のような3桁は、各桁を2回ずつ繰り返した <code>#FF00AA</code> と同じ意味です。</li>
+      <li><b>8桁のコード</b>：<code>#RRGGBBAA</code> のように末尾2桁が付く場合、最後の2桁は透明度を表します。</li>
+    </ul>
+    <h2>クイズで試してみよう</h2>
+    <p>「<b>激ムズ</b>」レベルでは、似ている4つのカラーコードから正解を選びます。まずいちばん大きい値で色の方向を絞り、次に全体の大きさで明るさを比べると、選択肢を減らしやすくなります。</p>
+    <p>「<b>この色も256色あんの？</b>」レベルでは、ほぼ同じに見える4色から、お題と同じ色を見分けます。1つの値が数段階違うだけの色は、肉眼ではほとんど区別できないこともあります。画面の明るさや設定でも見え方が変わるので、明るい画面で挑戦してみてください。</p>
+    <a class="cta" href="index.html">激ムズレベルに挑戦する →</a>
+
+    <h2>あわせて読みたい</h2>
+    <ul class="related"><li><a href="guide.html">色の読みもの 一覧</a></li><li><a href="wairo.html">和色（日本の伝統色）図鑑</a></li><li><a href="confusing-colors.html">間違えやすい色名の違い</a></li></ul>
+  </div>
+  <div class="site-footer">
+    <a href="usage.html">使い方</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="guide.html">色の読みもの</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="faq.html">よくある質問</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="about.html">運営者情報</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+</div>
+<script>
+  (function () {
+    function getEffectiveTheme() {
+      var stored = null;
+      try { stored = localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+      if (stored === "light" || stored === "dark") return stored;
+      return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    var btn = document.getElementById("theme-toggle");
+    function updateIcon(theme) {
+      btn.textContent = theme === "dark" ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateIcon(current);
+    btn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+      updateIcon(next);
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://colorquiz.labfond.com/confusing-colors.html">
+<script>
+  if (location.hostname.endsWith("github.io")) {
+    var path = location.pathname.replace(/^\/color-quiz/, "");
+    location.replace("https://colorquiz.labfond.com" + path + location.search + location.hash);
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>間違えやすい色名の違い｜紅と朱、紺と藍、カーキの本当の色 | これは何色？</title>
+<meta name="description" content="紅・緋色・朱色、紺色・藍色・瑠璃色、空色と水色、カーキ、ベージュとアイボリーなど、間違えやすい色名の違いを色見本で比べて解説します。">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LV1VCP5BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7LV1VCP5BG');
+</script>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("colorquiz-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) { /* ignore */ }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201f1d;
+    --ink-soft: #514f49;
+    --paper: #faf9f6;
+    --panel: #ffffff;
+    --line: #e4e1d9;
+    --accent: #2b3a67;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #f1efe9;
+      --ink-soft: #b9b6ad;
+      --paper: #17171a;
+      --panel: #201f23;
+      --line: #34333a;
+      --accent: #7c8fd6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f1efe9;
+    --ink-soft: #b9b6ad;
+    --paper: #17171a;
+    --panel: #201f23;
+    --line: #34333a;
+    --accent: #7c8fd6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.8;
+    padding: 32px 20px 64px;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .icon-toggle {
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .icon-toggle:active { transform: scale(0.96); }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0 0 20px;
+  }
+  h2 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  p {
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    font-size: 0.95rem;
+  }
+  li { margin-bottom: 8px; }
+  li b { color: var(--ink); }
+  a { color: var(--accent); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 8px;
+  }
+  .site-footer {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 4px;
+  }
+  .site-footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .site-footer a:hover { color: var(--ink); }
+  .footer-sep { margin: 0 6px; }
+
+  .lead { color: var(--ink-soft); font-size: 0.9rem; margin-top: -8px; }
+  .note { font-size: 0.82rem !important; color: var(--ink-soft) !important; background: var(--paper); border-radius: 10px; padding: 10px 14px; }
+  code, .hex { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; }
+  .sw-grid { display: grid; gap: 12px; margin: 0 0 18px; }
+  .sw { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .chip { flex-shrink: 0; width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--line); }
+  .chip.sm { width: 40px; height: 40px; border-radius: 8px; }
+  .sw-body { min-width: 0; }
+  .sw-name { font-weight: 700; font-size: 1rem; }
+  .sw-name small { font-weight: 500; color: var(--ink-soft); font-size: 0.78rem; margin-left: 6px; }
+  .sw-desc { font-size: 0.88rem !important; margin: 4px 0 0 !important; line-height: 1.75; }
+  .tbl-wrap { overflow-x: auto; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: middle; }
+  th { color: var(--ink-soft); font-weight: 700; font-size: 0.8rem; }
+  td .chip { display: inline-block; vertical-align: middle; }
+  .row-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
+  .row-chips .sw { padding: 8px 10px; align-items: center; gap: 10px; }
+  .card-list { list-style: none; padding: 0; }
+  .card-list li { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-list a { font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .card-list a:hover { text-decoration: underline; }
+  .card-list p { margin: 4px 0 0; font-size: 0.86rem; color: var(--ink-soft); }
+  .cta { display: inline-block; margin: 4px 0 18px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: #fff !important; text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+  .related { font-size: 0.88rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← クイズのトップへ</a>
+    <button class="icon-toggle" id="theme-toggle" type="button" aria-label="Toggle dark/light mode">🌙</button>
+  </div>
+  <div class="panel">
+    <h1>間違えやすい色名の違い</h1>
+    <p class="lead">似ているけれど名前が違う色を、色見本を並べて比べてみます。</p>
+    <p class="note">※色見本のカラーコードは、当クイズで出題している代表的な値です。同じ色名でも、資料や色見本帳によって色味は異なります。</p>
+    <h2>紅・緋色・茜色・朱色・丹色（赤の和色）</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#D0104C" aria-hidden="true"></span><div><b>紅</b><br><span class="hex">#D0104C</span></div></div><div class="sw"><span class="chip sm" style="background:#D9333F" aria-hidden="true"></span><div><b>緋色</b><br><span class="hex">#D9333F</span></div></div><div class="sw"><span class="chip sm" style="background:#B7282E" aria-hidden="true"></span><div><b>茜色</b><br><span class="hex">#B7282E</span></div></div><div class="sw"><span class="chip sm" style="background:#EB6238" aria-hidden="true"></span><div><b>朱色</b><br><span class="hex">#EB6238</span></div></div><div class="sw"><span class="chip sm" style="background:#E2540A" aria-hidden="true"></span><div><b>丹色</b><br><span class="hex">#E2540A</span></div></div></div>
+    <p>どれも「赤」ですが、<b>青みに寄るか、黄みに寄るか</b>で見分けられます。</p>
+    <ul><li><b>紅</b>：わずかに青みを帯びた、鮮やかな赤。紅花の染料に由来します。</li><li><b>緋色・茜色</b>：まっすぐな赤。茜色の方が暗く、深みがあります。</li><li><b>朱色・丹色</b>：黄みに寄った、オレンジに近い赤。どちらも鉱物系の顔料に由来します。</li></ul>
+    <p>カラーコードで見ると、紅はB（青）の値がG（緑）より大きく、朱色や丹色はGの値が大きくなっています。</p>
+    <h2>紺色・藍色・瑠璃色・群青色（青の和色）</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#1A237E" aria-hidden="true"></span><div><b>紺色</b><br><span class="hex">#1A237E</span></div></div><div class="sw"><span class="chip sm" style="background:#22577E" aria-hidden="true"></span><div><b>藍色</b><br><span class="hex">#22577E</span></div></div><div class="sw"><span class="chip sm" style="background:#1E50A2" aria-hidden="true"></span><div><b>瑠璃色</b><br><span class="hex">#1E50A2</span></div></div><div class="sw"><span class="chip sm" style="background:#4C6CB3" aria-hidden="true"></span><div><b>群青色</b><br><span class="hex">#4C6CB3</span></div></div></div>
+    <ul><li><b>藍色</b>：藍染めの色。わずかに緑みを含んだ、落ち着いた青です。</li><li><b>紺色</b>：藍染めを何度も重ねた、濃く暗い青。4つの中でいちばん暗い色です。</li><li><b>瑠璃色</b>：宝石ラピスラズリのような、紫みを帯びた深い青。</li><li><b>群青色</b>：鉱物から作る岩絵具の色で、4つの中ではもっとも明るい青です。</li></ul>
+    <h2>萌黄色・若草色・鶸色・黄緑（黄緑の仲間）</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#AACF53" aria-hidden="true"></span><div><b>萌黄色</b><br><span class="hex">#AACF53</span></div></div><div class="sw"><span class="chip sm" style="background:#A8CB3B" aria-hidden="true"></span><div><b>若草色</b><br><span class="hex">#A8CB3B</span></div></div><div class="sw"><span class="chip sm" style="background:#D7CF3A" aria-hidden="true"></span><div><b>鶸色</b><br><span class="hex">#D7CF3A</span></div></div><div class="sw"><span class="chip sm" style="background:#C0CA33" aria-hidden="true"></span><div><b>黄緑</b><br><span class="hex">#C0CA33</span></div></div></div>
+    <p>萌黄色と若草色はとてもよく似た、若葉の黄緑です。鶸色は4つの中でもっとも黄色に近く、黄色と黄緑の中間のような色です。カラーコードでは、R（赤）の値が大きいほど黄色寄りになります。</p>
+    <h2>空色と水色</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#4FC3F7" aria-hidden="true"></span><div><b>空色</b><br><span class="hex">#4FC3F7</span></div></div><div class="sw"><span class="chip sm" style="background:#81D4FA" aria-hidden="true"></span><div><b>水色</b><br><span class="hex">#81D4FA</span></div></div></div>
+    <p>どちらも明るい青ですが、当クイズでは<b>水色の方が白っぽく淡い色</b>として出題しています。一般に「空色」は晴れた空の明るい青、「水色」は水を思わせる淡い青を指しますが、色見本によって差が大きい組み合わせです。</p>
+    <h2>カーキ</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#8A7B4E" aria-hidden="true"></span><div><b>カーキ</b><br><span class="hex">#8A7B4E</span></div></div><div class="sw"><span class="chip sm" style="background:#6B6B1F" aria-hidden="true"></span><div><b>オリーブ色</b><br><span class="hex">#6B6B1F</span></div></div><div class="sw"><span class="chip sm" style="background:#6B8E4E" aria-hidden="true"></span><div><b>モスグリーン</b><br><span class="hex">#6B8E4E</span></div></div></div>
+    <p>日本では「カーキ色」と聞いて緑がかった色を思い浮かべる人も多いですが、カーキ（khaki）はもともと「土ぼこり」を意味する言葉で、本来は<b>黄みがかった茶色（土色）</b>を指します。緑寄りのくすんだ色は、オリーブ色やモスグリーンと呼ばれることが多い色です。</p>
+    <h2>ベージュ・アイボリー・クリーム色</h2>
+    <div class="row-chips"><div class="sw"><span class="chip sm" style="background:#E8DCC8" aria-hidden="true"></span><div><b>ベージュ</b><br><span class="hex">#E8DCC8</span></div></div><div class="sw"><span class="chip sm" style="background:#F2EAD3" aria-hidden="true"></span><div><b>アイボリー</b><br><span class="hex">#F2EAD3</span></div></div><div class="sw"><span class="chip sm" style="background:#FFF3D0" aria-hidden="true"></span><div><b>クリーム色</b><br><span class="hex">#FFF3D0</span></div></div></div>
+    <ul><li><b>ベージュ</b>：漂白も染色もしていない羊毛の色に由来する、灰みのある薄い茶色。3つの中でいちばん濃い色です。</li><li><b>アイボリー</b>：象牙（ivory）のような、わずかに黄みのある白。</li><li><b>クリーム色</b>：生クリームのような、黄みがはっきりした淡い色。</li></ul>
+    <a class="cta" href="index.html">クイズで見分けに挑戦する →</a>
+
+    <h2>あわせて読みたい</h2>
+    <ul class="related"><li><a href="guide.html">色の読みもの 一覧</a></li><li><a href="wairo.html">和色（日本の伝統色）図鑑</a></li><li><a href="hex-color-code.html">カラーコード（HEX）の読み方</a></li></ul>
+  </div>
+  <div class="site-footer">
+    <a href="usage.html">使い方</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="guide.html">色の読みもの</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="faq.html">よくある質問</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="about.html">運営者情報</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span class="footer-sep" aria-hidden="true">・</span>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+</div>
+<script>
+  (function () {
+    function getEffectiveTheme() {
+      var stored = null;
+      try { stored = localStorage.getItem("colorquiz-theme"); } catch (e) { /* ignore */ }
+      if (stored === "light" || stored === "dark") return stored;
+      return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    }
+    var btn = document.getElementById("theme-toggle");
+    function updateIcon(theme) {
+      btn.textContent = theme === "dark" ? "☀️" : "🌙";
+      btn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    var current = getEffectiveTheme();
+    document.documentElement.setAttribute("data-theme", current);
+    updateIcon(current);
+    btn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("colorquiz-theme", next); } catch (e) { /* ignore */ }
+      updateIcon(next);
+    });
+  })();
+</script>
+</body>
+</html>
