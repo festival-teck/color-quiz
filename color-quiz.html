@@ -212,6 +212,13 @@
     gap: 14px;
   }
 
+  .intro { width: 100%; margin-top: 28px; background: var(--panel, #fff); border: 1px solid var(--line, #e4e1d9); border-radius: 16px; padding: 20px 20px 8px; text-align: left; line-height: 1.8; }
+  .intro h2 { font-size: 1.05rem; margin: 0 0 8px; }
+  .intro h3 { font-size: 0.95rem; margin: 16px 0 4px; }
+  .intro p, .intro li { font-size: 0.9rem; color: var(--ink); }
+  .intro ul { padding-left: 1.3em; margin: 4px 0 12px; }
+  .intro li { margin-bottom: 4px; }
+  .intro a { color: var(--accent, #2b3a67); }
   .site-footer {
     width: 100%;
     margin-top: 22px;
@@ -838,6 +845,39 @@
     <h1 class="game-title" id="game-title">これは何色？</h1>
     <p class="game-sub" id="game-sub">正方形の色を当てるだけのシンプルなゲーム</p>
     <div class="level-list" id="level-list"></div>
+    <section class="intro" data-intro-lang="ja">
+      <h2>色の名前、どれだけ知っていますか？</h2>
+      <p>「これは何色？」は、画面に表示された正方形の色を見て、正しい色の名前を選ぶクイズです。会員登録は不要で、スマートフォンでもパソコンでも、ブラウザだけですぐに遊べます。</p>
+      <h3>5つのレベル</h3>
+      <ul>
+        <li><b>初級（10問）</b>：赤・青・黄色などの定番の色から、空色やコーラルまで。</li>
+        <li><b>中級（7問）</b>：紺色・テラコッタ・カーキなど、少し渋い色。</li>
+        <li><b>上級（5問）</b>：紅・浅葱色・利休鼠など、日本の伝統色（和色）。</li>
+        <li><b>激ムズ（5問）</b>：よく似た4つのカラーコードから、正しいものを選ぶ。</li>
+        <li><b>この色も256色あんの？（5問）</b>：ほぼ同じに見える4色から、お題とまったく同じ色を見分ける。</li>
+      </ul>
+      <h3>遊びながら色に詳しくなれる</h3>
+      <p>正解すると、その色の名前の由来や、どんなものに使われている色なのかが表示されます。各レベルの自己ベストはお使いのブラウザに保存されるので、何度でも記録更新に挑戦できます。</p>
+      <h3>あわせて読みたい</h3>
+      <ul>
+        <li><a href="wairo.html">和色（日本の伝統色）図鑑</a> ― 上級に出る27色を、読み方と由来つきで紹介</li>
+        <li><a href="hex-color-code.html">カラーコード（HEX）の読み方</a> ― 激ムズレベルの攻略に</li>
+        <li><a href="confusing-colors.html">間違えやすい色名の違い</a> ― 紅と朱、紺と藍、カーキの本当の色</li>
+      </ul>
+    </section>
+    <section class="intro" data-intro-lang="en" hidden>
+      <h2>How well do you know your colors?</h2>
+      <p>"What Color Is This?" is a simple quiz: look at the colored square and pick its correct name. No sign-up needed — it runs right in your browser on phones and computers.</p>
+      <h3>Five levels</h3>
+      <ul>
+        <li><b>Beginner (10 questions)</b>: everyday colors like red, blue and yellow, plus sky blue and coral.</li>
+        <li><b>Intermediate (7)</b>: subtler colors such as navy, terracotta and khaki.</li>
+        <li><b>Advanced (5)</b>: traditional Japanese colors (shown in Japanese only).</li>
+        <li><b>Extreme (5)</b>: choose the right one from four similar color codes.</li>
+        <li><b>Spot the difference (5)</b>: find the exact match among four nearly identical colors.</li>
+      </ul>
+      <p>After each correct answer you'll see where the color name comes from and how it's used. Your best score for each level is saved in your browser.</p>
+    </section>
     <div class="site-footer">
       <a id="footer-usage" href="usage.html">使い方</a>
       <span class="footer-sep" aria-hidden="true">・</span>
@@ -1519,6 +1559,7 @@
 
   function refreshStaticTexts() {
     var s = STRINGS[state.lang];
+    document.querySelectorAll("[data-intro-lang]").forEach(function (el) { el.hidden = el.getAttribute("data-intro-lang") !== state.lang; });
     document.title = s.title;
     els.gameTitle.textContent = s.title;
     els.gameSub.textContent = s.subtitle;
